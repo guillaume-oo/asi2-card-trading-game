@@ -1,13 +1,17 @@
 package com.cpe.springboot.user.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.cpe.springboot.user.model.UserDisplay;
 import com.cpe.springboot.user.model.UserModel;
 
 //ONLY FOR TEST NEED ALSO TO ALLOW CROOS ORIGIN ON WEB BROWSER SIDE
@@ -52,11 +56,12 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/auth")
-	private boolean getAllCourses(@RequestParam("login") String login, @RequestParam("pwd") String pwd) {
+	private int getAllCourses(@RequestParam("login") String login, @RequestParam("pwd") String pwd) {
+		List<UserModel> current_list=userService.getUserByLoginPwd(login,pwd);
 		if( userService.getUserByLoginPwd(login,pwd).size() > 0) {
-			return true;
+			return current_list.get(0).getId();
 		}
-		return false;
+		return -1;
 	}
 	
 
