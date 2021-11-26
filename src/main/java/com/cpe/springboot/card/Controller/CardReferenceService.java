@@ -13,10 +13,12 @@ import com.cpe.springboot.card.model.CardReference;
 
 @Service
 public class CardReferenceService {
-
-
-	@Autowired
-	private CardRefRepository cardRefRepository;
+	
+	private final CardRefRepository cardRefRepository;
+	
+	public CardReferenceService(CardRefRepository cardRefRepository) {
+		this.cardRefRepository=cardRefRepository;
+	}
 
 	public List<CardReference> getAllCardRef() {
 		List<CardReference> cardRefList = new ArrayList<>();

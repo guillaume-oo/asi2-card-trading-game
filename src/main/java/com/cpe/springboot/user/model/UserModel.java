@@ -54,6 +54,16 @@ public class UserModel implements Serializable {
 		this.email="email_default";
 	}
 
+	public UserModel(UserDTO user) {
+		this.id=user.getId();
+		this.login=user.getLogin();
+		this.pwd=user.getPwd();
+		this.account=user.getAccount();
+		this.lastName=user.getLastName();
+		this.surName=user.getSurName();
+		this.email=user.getEmail();
+	}
+
 	public Integer getId() {
 		return id;
 	}

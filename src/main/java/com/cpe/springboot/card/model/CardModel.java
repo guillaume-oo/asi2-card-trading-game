@@ -1,6 +1,6 @@
 package com.cpe.springboot.card.model;
 
-import com.cpe.springboot.store.model.StoreModel;
+import com.cpe.springboot.store.model.StoreTransaction;
 import com.cpe.springboot.user.model.UserModel;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -9,30 +9,39 @@ import javax.persistence.*;
 
 @Entity
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class CardModel extends CardReference{
+public class CardModel extends CardBasics{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	private float energy;
 	private float hp;
 	private float defence;
 	private float attack;
 	private float price;
 
-	//@ManyToOne(fetch = FetchType.LAZY)
-	//@ManyToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name = "user_id", nullable = true)
 	@ManyToOne
 	@JoinColumn
 	private UserModel user;
 
 	@ManyToOne
 	@JoinColumn
-	private StoreModel store;
+	private StoreTransaction store;
 
 	public CardModel() {
 		super();
 	}
+	
+	public CardModel( CardModel cModel) {
+		super(cModel);
+		this.energy=cModel.getEnergy();
+		this.hp=cModel.getHp();
+		this.defence=cModel.getDefence();
+		this.attack=cModel.getAttack();
+		this.price=cModel.getPrice();
+	}
 
-	public CardModel(CardReference cardRef) {
-		super(cardRef);
+	public CardModel( CardBasics cardBasic) {
+		super(cardBasic);
 	}
 
 	public CardModel(String name, String description, String family, String affinity, float energy, float hp,
@@ -42,7 +51,8 @@ public class CardModel extends CardReference{
 		this.hp = hp;
 		this.defence = defence;
 		this.attack = attack;
-		this.price=price;
+		//this.price=price;
+		this.price=this.computePrice();
 	}
 	public float getEnergy() {
 		return energy;
@@ -84,11 +94,11 @@ public class CardModel extends CardReference{
 		this.user = user;
 	}
 
-	public void setStore(StoreModel storeModel) {
+	public void setStore(StoreTransaction storeModel) {
 		this.store=storeModel;
 	}
 
-	public StoreModel getStore() {
+	public StoreTransaction getStore() {
 		return store;
 	}
 
@@ -96,5 +106,12 @@ public class CardModel extends CardReference{
 		return this.hp * 20 + this.defence*20 + this.energy*20 + this.attack*20;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

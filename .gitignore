@@ -1,5 +1,7 @@
 /target/
-.settings
 .metadata/
-.classpath
+.settings/
 .project
+.code
+.classpath
+*.iml
