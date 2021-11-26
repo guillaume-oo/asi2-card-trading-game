@@ -14,20 +14,17 @@ import com.cpe.springboot.user.model.UserModel;
 
 @Service
 public class CardModelService {
-	
+	private final CardModelRepository cardRepository;
+	private final CardReferenceService cardRefService;
 	private Random rand;
 
-	public CardModelService() {
+	public CardModelService(CardModelRepository cardRepository,CardReferenceService cardRefService) {
 		this.rand=new Random();
+		// Dependencies injection by constructor
+		this.cardRepository=cardRepository;
+		this.cardRefService=cardRefService;
 	}
-
-
-	@Autowired
-	private CardModelRepository cardRepository;
 	
-	@Autowired
-	private CardReferenceService cardRefService;
-
 	public List<CardModel> getAllCardModel() {
 		List<CardModel> cardList = new ArrayList<>();
 		cardRepository.findAll().forEach(cardList::add);
@@ -62,7 +59,7 @@ public class CardModelService {
 			currentCard.setDefence(rand.nextFloat()*100);
 			currentCard.setEnergy(100);
 			currentCard.setHp(rand.nextFloat()*100);
-			currentCard.setPrice(111);
+			currentCard.setPrice(currentCard.computePrice());
 			//save new card before sending for user creation
 			//this.addCard(currentCard);
 			cardList.add(currentCard);

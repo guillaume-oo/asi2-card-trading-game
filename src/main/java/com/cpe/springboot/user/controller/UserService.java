@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cpe.springboot.card.Controller.CardModelService;
 import com.cpe.springboot.card.model.CardModel;
+import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
 
 @Service
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private CardModelService cardModelService;
+	private final UserRepository userRepository;
+	private final CardModelService cardModelService;
+
+	public UserService(UserRepository userRepository, CardModelService cardModelService) {
+		this.userRepository = userRepository;
+		this.cardModelService = cardModelService;
+	}
 
 	public List<UserModel> getAllUsers() {
 		List<UserModel> userList = new ArrayList<>();
@@ -34,19 +36,24 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public void addUser(UserModel user) {
+	public void addUser(UserDTO user) {
+		UserModel u = fromUDtoToUModel(user);
 		// needed to avoid detached entity passed to persist error
-		userRepository.save(user);
-		List<CardModel> cardList=cardModelService.getRandCard(5);
-		for(CardModel card: cardList) {
-			user.addCard(card);
+		userRepository.save(u);
+		List<CardModel> cardList = cardModelService.getRandCard(5);
+		for (CardModel card : cardList) {
+			u.addCard(card);
 		}
-		userRepository.save(user);
+		userRepository.save(u);
+	}
+
+	public void updateUser(UserDTO user) {
+		UserModel u = fromUDtoToUModel(user);
+		userRepository.save(u);
 	}
 
 	public void updateUser(UserModel user) {
 		userRepository.save(user);
-
 	}
 
 	public void deleteUser(String id) {
@@ -54,9 +61,21 @@ public class UserService {
 	}
 
 	public List<UserModel> getUserByLoginPwd(String login, String pwd) {
-		List<UserModel> ulist=null;
-		ulist=userRepository.findByLoginAndPwd(login,pwd);
+		List<UserModel> ulist = null;
+		ulist = userRepository.findByLoginAndPwd(login, pwd);
 		return ulist;
+	}
+
+	private UserModel fromUDtoToUModel(UserDTO user) {
+		UserModel u = new UserModel(user);
+		List<CardModel> cardList = new ArrayList<CardModel>();
+		for (Integer cardId : user.getCardList()) {
+			Optional<CardModel> card = cardModelService.getCard(cardId);
+			if (card.isPresent()) {
+				cardList.add(card.get());
+			}
+		}
+		return u;
 	}
 
 }
