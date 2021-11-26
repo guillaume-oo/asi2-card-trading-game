@@ -1,0 +1,49 @@
+# image docker (container virtuel) pour executer les jobs (e.g effectuer le build de l'application)
+image: "maven:3-jdk-11"
+
+# commandes à executer sur le container virtuel (e.g ajout d'outils non dispo sur l'image de base)
+before_script:
+  - echo "I am a script executed before"
+
+# definition de l'ordre d'execution des jobs 
+# (e.g tous les jobs qui ont 'state:build' seront executés en premiers, puis tous les jobs de 'state:test' etc..)
+stages:
+  - package
+  - deploy
+
+# Define a cache storing maven dependencies in order to not download again dependencies on each job step
+cache:
+  paths:
+    - .m2/repository
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+
+# definition un nouveau job
+job_package:
+  stage: package
+  script:
+    - mvn package
+  # definition d'un livrable issue de la compilation (et des autres opérations demandées), disponible au téléchargement
+  artifacts:
+    paths:
+    - ./target/*.jar
+    expire_in: 1 week
+
+# definition un nouveau job pour le déploiement continu, ici heroku va détecter automatiquement le type de projet
+# (grave au pom.xml à la racine) et lancer l'application au démarrage
+job_deploy:
+  stage: deploy
+  image: ruby:2.3
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install faraday -v 1.0.1
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    
+
+  only:
+    - master
+    - dev
