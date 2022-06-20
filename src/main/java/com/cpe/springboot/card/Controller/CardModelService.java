@@ -8,8 +8,10 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cpe.springboot.card.model.CardDTO;
 import com.cpe.springboot.card.model.CardModel;
 import com.cpe.springboot.card.model.CardReference;
+import com.cpe.springboot.common.tools.DTOMapper;
 import com.cpe.springboot.user.model.UserModel;
 
 @Service
@@ -31,16 +33,18 @@ public class CardModelService {
 		return cardList;
 	}
 
-	public void addCard(CardModel cardModel) {
-		cardRepository.save(cardModel);
+	public CardDTO addCard(CardModel cardModel) {
+		CardModel cDb=cardRepository.save(cardModel);
+		return DTOMapper.fromCardModelToCardDTO(cDb);
 	}
 
 	public void updateCardRef(CardModel cardModel) {
 		cardRepository.save(cardModel);
 
 	}
-	public void updateCard(CardModel cardModel) {
-		cardRepository.save(cardModel);
+	public CardDTO updateCard(CardModel cardModel) {
+		CardModel cDb=cardRepository.save(cardModel);
+		return DTOMapper.fromCardModelToCardDTO(cDb);
 	}
 	public Optional<CardModel> getCard(Integer id) {
 		return cardRepository.findById(id);
