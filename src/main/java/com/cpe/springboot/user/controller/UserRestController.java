@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.cpe.springboot.common.tools.DTOMapper;
+import com.cpe.springboot.user.model.AuthDTO;
 import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
 
@@ -20,8 +22,6 @@ import com.cpe.springboot.user.model.UserModel;
 @CrossOrigin
 @RestController
 public class UserRestController {
-	private static final Integer NO_USER_ID = -1;
-	
 
 	private final UserService userService;
 	
@@ -29,7 +29,7 @@ public class UserRestController {
 		this.userService=userService;
 	}
 	
-	@RequestMapping("/users")
+	@RequestMapping(method=RequestMethod.GET,value="/users")
 	private List<UserDTO> getAllUsers() {
 		List<UserDTO> uDTOList=new ArrayList<UserDTO>();
 		for(UserModel uM: userService.getAllUsers()){
@@ -39,26 +39,26 @@ public class UserRestController {
 
 	}
 	
-	@RequestMapping("/user/{id}")
+	@RequestMapping(method=RequestMethod.GET,value="/user/{id}")
 	private UserDTO getUser(@PathVariable String id) {
 		Optional<UserModel> ruser;
 		ruser= userService.getUser(id);
 		if(ruser.isPresent()) {
 			return DTOMapper.fromUserModelToUserDTO(ruser.get());
 		}
-		return null;
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User id:"+id+", not found",null);
 
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/user")
-	public void addUser(@RequestBody UserDTO user) {
-		userService.addUser(user);
+	public UserDTO addUser(@RequestBody UserDTO user) {
+		return userService.addUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
-	public void updateUser(@RequestBody UserDTO user,@PathVariable String id) {
+	public UserDTO updateUser(@RequestBody UserDTO user,@PathVariable String id) {
 		user.setId(Integer.valueOf(id));
-		userService.updateUser(user);
+		return userService.updateUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")
@@ -67,13 +67,13 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")
-	private Integer getAllCourses(@RequestParam("login") String login, @RequestParam("pwd") String pwd) {
-		 List<UserModel> uList = userService.getUserByLoginPwd(login,pwd);
+	private Integer getAllCourses(@RequestBody AuthDTO authDto) {
+		 List<UserModel> uList = userService.getUserByLoginPwd(authDto.getUsername(),authDto.getPassword());
 		if( uList.size() > 0) {
 			
 			return uList.get(0).getId();
 		}
-		return NO_USER_ID;
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Authentification Failed",null);
 
 	}
 	

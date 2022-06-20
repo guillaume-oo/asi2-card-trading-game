@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cpe.springboot.card.Controller.CardModelService;
 import com.cpe.springboot.card.model.CardModel;
+import com.cpe.springboot.common.tools.DTOMapper;
 import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
 
@@ -36,7 +37,7 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public void addUser(UserDTO user) {
+	public UserDTO addUser(UserDTO user) {
 		UserModel u = fromUDtoToUModel(user);
 		// needed to avoid detached entity passed to persist error
 		userRepository.save(u);
@@ -44,16 +45,19 @@ public class UserService {
 		for (CardModel card : cardList) {
 			u.addCard(card);
 		}
-		userRepository.save(u);
+		UserModel uBd = userRepository.save(u);
+		return DTOMapper.fromUserModelToUserDTO(uBd);
 	}
 
-	public void updateUser(UserDTO user) {
+	public UserDTO updateUser(UserDTO user) {
 		UserModel u = fromUDtoToUModel(user);
-		userRepository.save(u);
+		UserModel uBd =userRepository.save(u);
+		return DTOMapper.fromUserModelToUserDTO(uBd);
 	}
 
-	public void updateUser(UserModel user) {
-		userRepository.save(user);
+	public UserDTO updateUser(UserModel user) {
+		UserModel uBd = userRepository.save(user);
+		return DTOMapper.fromUserModelToUserDTO(uBd);
 	}
 
 	public void deleteUser(String id) {

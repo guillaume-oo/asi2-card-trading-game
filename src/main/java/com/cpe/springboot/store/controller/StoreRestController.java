@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 //ONLY FOR TEST NEED ALSO TO ALLOW CROOS ORIGIN ON WEB BROWSER SIDE
 @CrossOrigin
 @RestController
+@RequestMapping(value="/store")
 public class StoreRestController {
 
 	private final StoreService storeService;
