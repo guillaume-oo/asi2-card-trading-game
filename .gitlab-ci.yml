@@ -11,8 +11,8 @@ job_package:
     paths:
     - ./target/*.jar
     expire_in: 1 week
-  only:
-    - master
+#  only:
+#    - master
 
 job_build:
   image: docker:19.03.12
