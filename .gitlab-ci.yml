@@ -1,50 +1,34 @@
-# image docker (container virtuel) pour executer les jobs (e.g effectuer le build de l'application)
-
-image: "maven:3-jdk-11"
-
-
-# commandes à executer sur le container virtuel (e.g ajout d'outils non dispo sur l'image de base)
-before_script:
-  - echo "I am a script executed before"
-
-# definition de l'ordre d'execution des jobs 
-# (e.g tous les jobs qui ont 'state:build' seront executés en premiers, puis tous les jobs de 'state:test' etc..)
 stages:
   - package
-  - deploy
+  - build
 
-# Define a cache storing maven dependencies in order to not download again dependencies on each job step
-cache:
-  paths:
-    - .m2/repository
-
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
-
-
-# definition un nouveau job
 job_package:
+  image: maven:3.6-jdk-11
   stage: package
   script:
     - mvn package
-  # definition d'un livrable issue de la compilation (et des autres opérations demandées), disponible au téléchargement
   artifacts:
     paths:
     - ./target/*.jar
     expire_in: 1 week
-
-# definition un nouveau job pour le déploiement continu, ici heroku va détecter automatiquement le type de projet
-# (grave au pom.xml à la racine) et lancer l'application au démarrage
-job_deploy:
-  stage: deploy
-  image: ruby:2.3
-  script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install faraday -v 1.0.1
-    - gem install dpl
-    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
-    
-
   only:
     - master
+
+job_build:
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  script:
+    - mkdir target
+    - ls 
+    - ls fire-simulator
+    - ls -a ./target/ 
+    - cp ./target/*.jar target/.
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:latest -f ./Dockerfile .
+    - docker push $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:latest 
+    
+ # only:
+ #   - master
+
