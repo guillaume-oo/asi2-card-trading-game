@@ -11,8 +11,8 @@ job_package:
     paths:
     - ./target/*.jar
     expire_in: 1 week
-#  only:
-#    - master
+  only:
+    - master
 
 job_build:
   image: docker:19.03.12
@@ -26,6 +26,6 @@ job_build:
     - docker build -t $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:latest -f ./Dockerfile .
     - docker push $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:latest 
     
- # only:
- #   - master
+  only:
+    - master
 
