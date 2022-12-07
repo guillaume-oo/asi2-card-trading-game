@@ -61,12 +61,14 @@ public class UserRestController {
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
 	public UserDTO updateUser(@RequestBody UserDTO user,@PathVariable String id) {
 		user.setId(Integer.valueOf(id));
-		return userService.updateUser(user);
+		return userAsync.updateUser(user);
+		//return userService.updateUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")
 	public void deleteUser(@PathVariable String id) {
-		userService.deleteUser(id);
+		//userService.deleteUser(id);
+		userAsync.deleteUser(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")

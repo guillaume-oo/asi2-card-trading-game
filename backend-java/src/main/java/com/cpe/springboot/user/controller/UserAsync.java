@@ -18,40 +18,84 @@ public class UserAsync {
 
     @Autowired
     JmsTemplate jmsTemplate;
-    static final String userBusName = "User_BUS";
+    static final String busName = "User_BUS";
     private final UserService userService;
 
     public UserAsync(UserService userService){
         this.userService= userService;
     }
-    
-	public UserDTO addUserAsync(UserDTO user) {
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            // Java object to JSON string
-            String userString = mapper.writeValueAsString(user);
-            //todo envoyer le vrai truc
-            System.out.println("[BUSLISTENER] [CHANNEL User_BUS_MNG] SEND MSG uid:" + user.getId());
-            jmsTemplate.convertAndSend(userBusName, userString);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return user;
 
+    public void sendMsg(String msg) {
+        System.out.println("[BUSSERVICE] SEND String MSG=["+msg+"] to Bus=["+msg+"]");
+        jmsTemplate.convertAndSend(busName,msg);
+    }
+
+    
+	@JmsListener(destination = busName, containerFactory = "connectionFactory")
+    public void receiveMessage(String stringReceive, Message message) {
+		String command = stringReceive.split("/")[0];
+		String dataString = stringReceive.split("/")[1];
+
+		System.out.println("COMMAND : ["+command+"]");
+		
+		if (command.equals("delete")) {
+			System.out.println("---Data : "+ dataString);
+        	userService.deleteUser(dataString);
+        }
+		
+		else {
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				UserDTO user = mapper.readValue(dataString, UserDTO.class);
+				
+		        System.out.println("[BUSLISTENER] RECEIVED String MSG=["+user+"]");
+		        
+		        //different commands
+		        if (command.equals("add")) {
+		        	userService.addUser(user);
+		        }
+		        if (command.equals("update")) {
+		        	userService.updateUser(user);
+		        }
+		        
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    }
 	}
 
-	@JmsListener(destination = userBusName, containerFactory = "connectionFactory")
-    public void receiveMessage(String msgStr, Message message) {
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            //JSON file to Java object
-            UserDTO user = mapper.readValue(msgStr, UserDTO.class);
-            System.out.println("[BUSLISTENER] [CHANNEL User_BUS_MNG] RECEIVED String MSG=["+user.toString()+"]");
-            userService.addUser(user);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public UserDTO addUserAsync(UserDTO user) {
+		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String userSend = mapper.writeValueAsString(user);
+			String sendMessage = "add/"+userSend;
+			sendMsg(sendMessage);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+
+	public UserDTO updateUser(UserDTO user) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String userSend = mapper.writeValueAsString(user);
+			String sendMessage = "update/"+userSend;
+			sendMsg(sendMessage);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+
+	public void deleteUser(String id) {
+        String sendMessage = "delete/"+id;
+        sendMsg(sendMessage);
+        return;
+	}
 }
