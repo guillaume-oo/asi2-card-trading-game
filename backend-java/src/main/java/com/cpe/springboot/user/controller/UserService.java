@@ -17,12 +17,12 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final CardModelService cardModelService;
-	private final UserAsync userAsync;
 
-	public UserService(UserRepository userRepository, CardModelService cardModelService, UserAsync userAsync) {
+
+	public UserService(UserRepository userRepository, CardModelService cardModelService) {
 		this.userRepository = userRepository;
 		this.cardModelService = cardModelService;
-		this.userAsync = userAsync;
+
 	}
 
 	public List<UserModel> getAllUsers() {
@@ -40,7 +40,6 @@ public class UserService {
 	}
 
 	public UserDTO addUser(UserDTO user) {
-		
 		UserModel u = fromUDtoToUModel(user);
 		// needed to avoid detached entity passed to persist error
 		userRepository.save(u);
@@ -86,12 +85,6 @@ public class UserService {
 		return u;
 	}
 	
-	
-	//ajout
-	public UserDTO addUserAsync(UserDTO user) {			//todo refaire le return
-		userAsync.adduserAsync(user);
-		return user;
-	}
-	
+
 
 }
