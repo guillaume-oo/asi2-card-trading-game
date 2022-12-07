@@ -24,9 +24,11 @@ import com.cpe.springboot.user.model.UserModel;
 public class UserRestController {
 
 	private final UserService userService;
-	
-	public UserRestController(UserService userService) {
+    private final UserAsync userAsync;
+
+	public UserRestController(UserService userService, UserAsync userAsync) {
 		this.userService=userService;
+        this.userAsync=userAsync;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/users")
@@ -52,7 +54,7 @@ public class UserRestController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/user")
 	public UserDTO addUser(@RequestBody UserDTO user) {
-		return userService.addUserAsync(user);
+		return userAsync.addUserAsync(user);
 		//return userService.addUser(user);
 	}
 	
