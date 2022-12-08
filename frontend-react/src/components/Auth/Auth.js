@@ -32,7 +32,7 @@ export const Auth = (props) =>{
 
     function submitOrder(data){
         props.submitUserHandler(data);
-        console.log(currentUser);
+        console.log("current user : " + currentUser);
         fetch('/auth',{
             method: 'POST',
             headers: {
@@ -41,6 +41,7 @@ export const Auth = (props) =>{
             body: JSON.stringify(currentUser)
           })
         .then(response => {
+            console.log("reponse: "+ response)
             if (response.status == 403){throw new Error('Invalid credentials');}
             else if (response.status == 200) {return response.json()}
             })
