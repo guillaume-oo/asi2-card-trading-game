@@ -8,8 +8,8 @@ export const Auth = (props) =>{
                                             // surname:"",
                                             // lastname:"",
                                             // img:"",
-                                            login:"",
-                                            pwd:"",
+                                            username:"",
+                                            password:"",
                                             // money:0,
 
                                         });
@@ -30,7 +30,21 @@ export const Auth = (props) =>{
 
     function submitOrder(data){
         props.submitUserHandler(data);
-        navigate("/Home");
+        console.log(currentUser);
+        fetch('/auth',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(currentUser)
+          })
+        .then(response => response.json())
+        .then((response) => {
+            if (response.status == 403){alert("Not Auth");}
+            else {navigate('/home')}
+        })
+        .catch(error => alert(error))
+        
     }
     
     return (
@@ -39,10 +53,10 @@ export const Auth = (props) =>{
                 User Login
             </Header>
             <Form.Field>
-                <Form.Input label="Login" placeholder="Login" onChange={processInput}  name="login" value={currentUser.login}/>
+                <Form.Input label="Login" placeholder="Login" onChange={processInput}  name="username" value={currentUser.login}/>
             </Form.Field>
             <Form.Field>
-                <Form.Input type="password" label="Pwd" placeholder="password" onChange={processInput}  name="pwd" value={currentUser.pwd}/>
+                <Form.Input type="password" label="Pwd" placeholder="password" onChange={processInput}  name="password" value={currentUser.pwd}/>
             </Form.Field>
             <Button type='button' onClick={submitOrder}>Login</Button>
         </Form>
