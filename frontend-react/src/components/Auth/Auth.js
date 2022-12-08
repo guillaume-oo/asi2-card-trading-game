@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Header,Button } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { userUpdate } from "../../core/actions"
 
 export const Auth = (props) =>{
        const [currentUser,setCurrentUser]= useState({
@@ -20,13 +22,13 @@ export const Auth = (props) =>{
         const target = event.currentTarget;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        console.log(event.target.value);
         // let currentVal=currentUser;
         setCurrentUser({...currentUser, [name]: value});
         // currentVal[name]= value;
         // props.handleChange(currentVal);
     };
     const navigate = useNavigate();
+    let dispatch = useDispatch();
 
     function submitOrder(data){
         props.submitUserHandler(data);
@@ -38,13 +40,24 @@ export const Auth = (props) =>{
             },
             body: JSON.stringify(currentUser)
           })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status == 403){throw new Error('Invalid credentials');}
+            else if (response.status == 200) {return response.json()}
+            })
         .then((response) => {
-            if (response.status == 403){alert("Not Auth");}
-            else {navigate('/home')}
+            console.log("Auth Success, userID : "+response)
+            getUserByID(response)
+            navigate('/home')
         })
         .catch(error => alert(error))
         
+    }
+
+    function getUserByID(userID){
+        fetch('/user/'+userID)
+        .then(response => response.json())
+        .then(response => dispatch(userUpdate(response)))
+        .catch(error => alert(error))
     }
     
     return (
