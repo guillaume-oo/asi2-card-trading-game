@@ -5,10 +5,32 @@ import { Auth } from './components/Auth/Auth';
 import { MarketBuy } from './components/Market/MarketBuy';
 import { MarketSell } from './components/Market/MarketSell';
 import { NavBar } from './components/NavBar/NavBar';
+import { useDispatch } from "react-redux/es/exports"
+import { cardUpdate } from './core/actions';
+
 
 export const Main= (props) =>{
 
     const [v,setV] = useState("");
+
+    const [cards, setCards] = useState("");
+    let dispatch=useDispatch()
+    
+    useEffect( ()=> {
+        fetch('http://tp.cpe.fr:8083/cards')
+            .then(response => response.json())
+            .then((response) => {
+                setCards(response)
+                
+               
+                dispatch(cardUpdate(response));
+                
+                
+                //alert(response)
+                
+            })
+            .catch(error => alert(error))
+    }, [])
 
     function submitUserHandler(data){
         

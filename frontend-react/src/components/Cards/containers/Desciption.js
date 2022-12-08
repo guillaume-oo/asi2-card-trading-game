@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export const Label =(props)=>{
+export const description =(props)=>{
   return (
     <div>
         <h1>{props.title}</h1>
