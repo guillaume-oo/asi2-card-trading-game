@@ -8,21 +8,16 @@ export const MarketBuy= (props) =>{
     const listcards = useSelector(state=>state.cardReducer.cards)
     const selectedcard = useSelector(state=>state.cardReducer.selectedCard)
 
-    console.log(selectedcard);
-
     return(
         <div>
-            <h1> Market</h1>
             <div className="row">
                 <div className="left-66">
-                    <LeftSide cards={listcards}/>
+                    <LeftSide cards={listcards} action="buy"/>
                 </div>
                 <div className="right-33">
                     <RightSide card={selectedcard}/>
                 </div>
-
             </div>
         </div>
-        
     );
 }

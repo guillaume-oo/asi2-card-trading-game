@@ -12,6 +12,8 @@ export const TableCard =(props) =>{
         dispatch(selectedCardUpdate(card));   
     }
 
+    const actionIcon = props.action== "buy" ? <i class="shop icon"></i> : <i class="money icon"></i>;
+
     if (props.card != null){
         return (
             <tr onClick={() => handleOnCardSelected(props.card)}>
@@ -27,11 +29,12 @@ export const TableCard =(props) =>{
                 <td aria-label='defence'> {props.card.defence} </td>
                 <td aria-label='attack'> {props.card.attack} </td>
                 <td aria-label='price'> {props.card.price}$ </td>
+
                 <td>
                     <div class="ui vertical animated button" tabindex="0">
-                        <div class="hidden content">Sell</div>
+                        <div class="hidden content">{props.action}</div>
                         <div class="visible content">
-                            <i class="shop icon"></i>
+                            {actionIcon}
                         </div>
                     </div>
                 </td>

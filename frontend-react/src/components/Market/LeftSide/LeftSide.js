@@ -11,6 +11,7 @@ export const LeftSide= (props) =>{
                     <TableCard
                        key={i}
                        card={props.cards[i]}
+                       action={props.action}
                     />
                     );
             }
