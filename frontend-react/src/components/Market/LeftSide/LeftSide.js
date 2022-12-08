@@ -21,8 +21,6 @@ export const LeftSide= (props) =>{
     const display_list= getAllCards();
 
     return(
-
-            <div className="col-md-4 col-lg-4">
                 <table class="ui selectable celled table" id="cardListId">
                     <thead>
                         <tr>
@@ -41,6 +39,6 @@ export const LeftSide= (props) =>{
                         {display_list}
                     </tbody>
                 </table>
-            </div>
+        
     );
 }

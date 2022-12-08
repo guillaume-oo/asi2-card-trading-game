@@ -14,8 +14,13 @@ export const MarketBuy= (props) =>{
         <div>
             <h1> Market</h1>
             <div className="row">
-                <LeftSide cards={listcards}/>
-                <RightSide card={selectedcard}/>
+                <div className="left-66">
+                    <LeftSide cards={listcards}/>
+                </div>
+                <div className="right-33">
+                    <RightSide card={selectedcard}/>
+                </div>
+
             </div>
         </div>
         

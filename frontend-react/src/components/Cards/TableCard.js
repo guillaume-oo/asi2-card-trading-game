@@ -16,7 +16,7 @@ export const TableCard =(props) =>{
         return (
             <tr onClick={() => handleOnCardSelected(props.card)}>
                 <td>
-                    name = {props.card.name} id = {props.card.id}
+                    {props.card.name} 
                 </td>
                 <td>
                     <Description description = {props.card.description}/>
