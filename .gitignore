@@ -5,5 +5,5 @@
 .code
 .classpath
 *.iml
-./frontend-react/node_modules
-./frontend-react/package-lock.json
+/frontend-react/node_modules/*
+/frontend-react/package-lock.json
