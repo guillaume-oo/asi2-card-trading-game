@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TableCard } from '../../Cards/TableCard';
 
-//const json = require('./sources/robots.json');
-//Create a react component with props
 export const LeftSide= (props) =>{
 
     function getAllCards(){
         let array_render=[];
-        console.log(props);
         if (props.cards != null){
             for(var i=0; i<props.cards.length; i++){
                 array_render.push(
@@ -24,7 +21,7 @@ export const LeftSide= (props) =>{
     const display_list= getAllCards();
 
     return(
-        <div className="row">
+
             <div className="col-md-4 col-lg-4">
                 <table class="ui selectable celled table" id="cardListId">
                     <thead>
@@ -45,6 +42,5 @@ export const LeftSide= (props) =>{
                     </tbody>
                 </table>
             </div>
-        </div>
     );
 }

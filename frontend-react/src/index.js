@@ -6,13 +6,12 @@ import { Provider } from 'react-redux';
 import {Main} from './Main';
 import 'semantic-ui-css/semantic.min.css'
 import './css/index.css'
-import store from './core/store';
+import store from './core/reducers/store';
 
 //Insert a <Main> component inside the <div id='root'/>
 // send the property title to the App component
 ReactDOM.render(
-<Provider store={store}>
-<Main />
-</Provider>
-
+    <Provider store={store}>
+        <Main />
+    </Provider>
 , document.getElementById('root'));

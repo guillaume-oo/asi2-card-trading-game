@@ -1,12 +1,19 @@
 let initState={
-    cards:{}
+    cards:{},
+    selectedCard:{}
 }
 
 const cardReducer = (state=initState,action) =>{
     console.log("action: " + action)
     switch(action.type){
-        case "LIST_CARD":
-            return {cards:action.obj};
+        case "UPDATE_LIST_CARD":
+            return {...state, 
+                    cards:action.obj
+                };
+
+        case "UPDATE_SELECTED_CARD":
+            return {...state,
+                selectedCard:action.obj};
         
         default:
             return state;

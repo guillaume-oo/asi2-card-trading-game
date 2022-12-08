@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cardReducer from './reducers/cardReducer';
+import cardReducer from './cardReducer';
 
 export default configureStore({
     reducer: {

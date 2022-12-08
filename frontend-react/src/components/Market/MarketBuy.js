@@ -1,32 +1,22 @@
-import React, { Component, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { Card } from 'semantic-ui-react';
-import { Cards } from '../Cards/Card';
-import { LeftSide } from './LeftSide.js/LeftSide';
-import { useSelector } from "react-redux/es/exports"
+import React from 'react';
+import { LeftSide } from './LeftSide/LeftSide';
+import { RightSide } from './RightSide/RightSide';
+import { useSelector, useDispatch } from "react-redux"
 
 export const MarketBuy= (props) =>{
-    const navigate = useNavigate();
 
-    //const [cards, setCards] = useState("");
+    const listcards = useSelector(state=>state.cardReducer.cards)
+    const selectedcard = useSelector(state=>state.cardReducer.selectedCard)
 
-    const Listcards = useSelector(state=>state.cardReducer.cards)
-    console.log(Listcards)
-
-    /*useEffect( ()=> {
-        fetch('/cards_to_sell')
-            .then(response => response.json())
-            .then((response) => {
-                setCards(response)
-                alert(response)
-            })
-            .catch(error => alert(error))
-    }, [])*/
+    console.log(selectedcard);
 
     return(
         <div>
             <h1> Market</h1>
-            <LeftSide cards={Listcards}/>
+            <div className="row">
+                <LeftSide cards={listcards}/>
+                <RightSide card={selectedcard}/>
+            </div>
         </div>
         
     );

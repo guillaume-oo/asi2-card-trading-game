@@ -1,11 +1,20 @@
 import React from 'react';
 import { Description } from './containers/Description';
+import { useDispatch } from "react-redux/es/exports";
+import { selectedCardUpdate } from '../../core/actions';
 
 
 export const TableCard =(props) =>{
+    //Connect to the store
+    const dispatch = useDispatch();
+
+    function handleOnCardSelected(card){
+        dispatch(selectedCardUpdate(card));   
+    }
+
     if (props.card != null){
         return (
-            <tr>
+            <tr onClick={() => handleOnCardSelected(props.card)}>
                 <td>
                     name = {props.card.name} id = {props.card.id}
                 </td>
