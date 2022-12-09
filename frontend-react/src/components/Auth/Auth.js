@@ -32,33 +32,43 @@ export const Auth = (props) =>{
 
     function submitOrder(data){
         props.submitUserHandler(data);
-        console.log("current user : " + currentUser);
-        fetch('/auth',{
+        console.log("current user : " + JSON.stringify(currentUser) );
+        fetch('http://tp.cpe.fr:8083/auth',{
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(currentUser)
-          })
+        })
+        .then((response) => {
+            if (response.status == 403){throw new Error('Invalid credentials');}
+            else if (response.status == 200) {return response.json()}
+        })
+        .then((data) => {
+            console.log("reponse: "  +JSON.stringify(data));
+            if (getUserByID(data)){
+                navigate('/home')
+            }else{
+                throw new Error('User not found');
+            }
+        })
+        .catch(error => alert(error))
+    }
+
+    function getUserByID(userID){
+        fetch('http://tp.cpe.fr:8083/user/'+userID)
         .then(response => {
             console.log("reponse: "+ response)
             if (response.status == 403){throw new Error('Invalid credentials');}
             else if (response.status == 200) {return response.json()}
-            })
-        .then((response) => {
-            console.log("Auth Success, userID : "+response)
-            getUserByID(response)
-            navigate('/home')
+        })
+        .then(response => {
+            console.log("Fetched user: "+ JSON.stringify(response));
+            dispatch(userUpdate(response));
+            
         })
         .catch(error => alert(error))
-        
-    }
-
-    function getUserByID(userID){
-        fetch('/user/'+userID)
-        .then(response => response.json())
-        .then(response => dispatch(userUpdate(response)))
-        .catch(error => alert(error))
+        return true;
     }
     
     return (

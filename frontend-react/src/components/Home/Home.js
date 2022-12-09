@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const Home= (props) =>{
     const navigate = useNavigate();
     function handleClickAuth() {
-        navigate('/Auth')
+        navigate('/')
     }
     function handleClickBuyCards() {
         navigate('/Market-Buy')
@@ -20,7 +20,7 @@ export const Home= (props) =>{
     return(
         <div>
             <h1> Welcome to card game</h1>
-            <button onClick={handleClickAuth}>Auth</button>
+            {/* <button onClick={handleClickAuth}>Auth</button> */}
             <button onClick={handleClickBuyCards}>Buy Cards</button> 
             <button onClick={handleClickSellCards}>Sell Cards</button> 
             <button onClick={handleClickPlay}>Play</button> 
