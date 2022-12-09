@@ -10,7 +10,7 @@ export const NavBar= (props) =>{
         ['/Home', 'Home'],
         ['/Market-Buy', 'Buy'],
         ['/Market-Sell', 'Sell'],
-        ['/Play', 'Sell']
+        ['/Play', 'Play']
     ])
 
     const routeName= routeHashmap.get(useLocation().pathname);
@@ -28,7 +28,7 @@ export const NavBar= (props) =>{
                 <div className='navbar--link-item'>Argent</div>
             </div>
 
-            <div className='navbar--link-item'>{routeName}</div>
+            <h1>{routeName}</h1>
             <User/>
         </nav>
     );
