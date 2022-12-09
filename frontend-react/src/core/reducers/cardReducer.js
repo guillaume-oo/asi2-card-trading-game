@@ -4,7 +4,6 @@ let initState={
 }
 
 const cardReducer = (state=initState,action) =>{
-    console.log("action: " + action)
     switch(action.type){
         case "UPDATE_LIST_CARD":
             return {...state, 

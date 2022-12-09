@@ -38,6 +38,7 @@ public class UserService {
 	}
 
 	public UserDTO addUser(UserDTO user) {
+        System.out.println("[USERSERVICE] [CREATE USER] : "+user.toString());
 		UserModel u = fromUDtoToUModel(user);
 		// needed to avoid detached entity passed to persist error
 		userRepository.save(u);
@@ -47,6 +48,7 @@ public class UserService {
 		}
 		UserModel uBd = userRepository.save(u);
 		return DTOMapper.fromUserModelToUserDTO(uBd);
+	
 	}
 
 	public UserDTO updateUser(UserDTO user) {
@@ -81,5 +83,4 @@ public class UserService {
 		}
 		return u;
 	}
-
 }

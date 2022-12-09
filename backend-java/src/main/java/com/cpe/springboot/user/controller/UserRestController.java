@@ -24,9 +24,11 @@ import com.cpe.springboot.user.model.UserModel;
 public class UserRestController {
 
 	private final UserService userService;
-	
-	public UserRestController(UserService userService) {
+    private final UserAsync userAsync;
+
+	public UserRestController(UserService userService, UserAsync userAsync) {
 		this.userService=userService;
+        this.userAsync=userAsync;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/users")
@@ -52,18 +54,21 @@ public class UserRestController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/user")
 	public UserDTO addUser(@RequestBody UserDTO user) {
-		return userService.addUser(user);
+		return userAsync.addUserAsync(user);
+		//return userService.addUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
 	public UserDTO updateUser(@RequestBody UserDTO user,@PathVariable String id) {
 		user.setId(Integer.valueOf(id));
-		return userService.updateUser(user);
+		return userAsync.updateUser(user);
+		//return userService.updateUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")
 	public void deleteUser(@PathVariable String id) {
-		userService.deleteUser(id);
+		//userService.deleteUser(id);
+		userAsync.deleteUser(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")
