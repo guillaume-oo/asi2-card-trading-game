@@ -11,8 +11,6 @@ export const MarketSell= (props) =>{
     const user = useSelector(state=>state.myUserReducer.user);
     const UserCards = user.cardList;
     let cardToSell = [];
-    console.log("la liste de carte : " + UserCards);
-
     
     for(var i = 0; i< UserCards.length; i++){
         const index = listcards.findIndex(card => card.id == UserCards[i])

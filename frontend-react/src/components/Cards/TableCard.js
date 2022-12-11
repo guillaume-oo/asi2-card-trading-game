@@ -2,6 +2,7 @@ import React from 'react';
 import { Description } from './containers/Description';
 import { useDispatch } from "react-redux/es/exports";
 import { selectedCardUpdate } from '../../core/actions';
+import { useSelector } from "react-redux"
 
 
 export const TableCard =(props) =>{
@@ -11,6 +12,35 @@ export const TableCard =(props) =>{
     function handleOnCardSelected(card){
         dispatch(selectedCardUpdate(card));   
     }
+
+    const user = useSelector(state=>state.myUserReducer.user);
+    const UserId = user.id;
+    
+
+    function ActionCard(card){
+        let CardId = parseInt(props.card.id);
+
+        console.log("TEST CARD ID: " + CardId + " FOR USER: " + UserId)
+        console.log("TEST CARD ACTION TYPE: " + props.action)
+            console.log("UserId type: " + typeof(UserId) + " cardId type: " + typeof(CardId))
+            fetch('http://tp.cpe.fr:8083/store/'+props.action,{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                { "user_id": UserId, "card_id": CardId}
+                )
+        })
+        .then(response => response.text())
+        .then((response) => {
+            if (response == true){throw new Error('Transaction Réussie !');}
+            if (response == false){throw new Error('Transaction Impossible !');}
+        })
+
+        
+    }
+
 
     const actionIcon = props.action== "buy" ? <i class="shop icon"></i> : <i class="money icon"></i>;
 
@@ -33,9 +63,7 @@ export const TableCard =(props) =>{
                 <td>
                     <div class="ui vertical animated button" tabindex="0">
                         <div class="hidden content">{props.action}</div>
-                        <div class="visible content">
-                            {actionIcon}
-                        </div>
+                        <button type='button' onClick={ActionCard}>{actionIcon}</button>
                     </div>
                 </td>
             </tr>
