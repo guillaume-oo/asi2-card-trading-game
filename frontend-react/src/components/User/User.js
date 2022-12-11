@@ -14,5 +14,7 @@ export const User = ()=>{
     }
     return ( <>
         <h2> UserName : {user.login}</h2>
+        <h2> User Money : {user.account} </h2>
+        <h2> User ID : {user.id} </h2>
     </>)
 }

@@ -25,7 +25,6 @@ export const NavBar= (props) =>{
         <nav className='navbar'>
             <div className='navbar--left'>
                 <button onClick={handleClickHome} className={routeName=='Home' ? 'navbar--home-button hidden' : 'navbar--home-button'}>Home</button>
-                <div className='navbar--link-item'>Argent</div>
             </div>
 
             <h1>{routeName}</h1>
