@@ -1,28 +1,28 @@
-const UserService = require('../services/');
-const User = require('');
+const ChatService = require('../services/');
+const Chat = require('');
 
-class UserController {
+class ChatController {
     constructor({}) {
-        console.log(`new UserController`);
+        console.log(`new ChatController`);
     }
 
-    getUsers(request, response) {
-        response.json(UserService.listUser());
+    getChats(request, response) {
+        response.json(ChatService.listChat());
     }
 
-    getUser(request, response) {
-        response.json(UserService.getUser(request.params.userId));
+    getChat(request, response) {
+        response.json(ChatService.getChat(request.params.ChatId));
     }
 
-    createUser(request, response) {
-        let user = new User(request.body);
-        user = UserService.addUser(user);
-        response.json(user);
+    createChat(request, response) {
+        let Chat = new Chat(request.body);
+        Chat = ChatService.addChat(Chat);
+        response.json(Chat);
     }
 
-    updateUser(request, response) {}
+    updateChat(request, response) {}
 
-    deleteUser(request, response) {}
+    deleteChat(request, response) {}
 }
 
-module.exports = new UserController({});
+module.exports = new ChatController({});
