@@ -13,7 +13,7 @@ export const Main= (props) =>{
     let dispatch=useDispatch();
     
     useEffect( ()=> {
-        fetch('http://tp.cpe.fr:8083/cards')
+        fetch('http://localhost:8083/cards')
             .then(response => response.json())
             .then((response) => {
                 dispatch(cardsUpdate(response));    

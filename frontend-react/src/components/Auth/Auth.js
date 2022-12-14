@@ -33,7 +33,7 @@ export const Auth = (props) =>{
     function submitOrder(data){
         props.submitUserHandler(data);
         console.log("current user : " + JSON.stringify(currentUser) );
-        fetch('http://tp.cpe.fr:8083/auth',{
+        fetch('http://localhost:8083/auth',{
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ export const Auth = (props) =>{
     }
 
     function getUserByID(userID){
-        fetch('http://tp.cpe.fr:8083/user/'+userID)
+        fetch('http://localhost:8083/user/'+userID)
         .then(response => {
             console.log("reponse: "+ response)
             if (response.status == 403){throw new Error('Invalid credentials');}
