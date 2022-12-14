@@ -1,24 +1,37 @@
-import React, { Component, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { LeftSide } from './LeftSide/LeftSide';
+import { RightSide } from './RightSide/RightSide';
+import { useSelector, useDispatch } from "react-redux"
+import { wait } from '@testing-library/user-event/dist/utils';
 
 export const MarketSell= (props) =>{
-    const navigate = useNavigate();
 
-    const [cards, setCards] = useState("");
+    const listcards = useSelector(state=>state.cardReducer.cards);
+    const selectedcard = useSelector(state=>state.cardReducer.selectedCard);
+    const user = useSelector(state=>state.myUserReducer.user);
+    const UserCards = user.cardList;
+    let cardToSell = [];
+    
+    for(var i = 0; i< UserCards.length; i++){
+        const index = listcards.findIndex(card => card.id == UserCards[i])
+        if(index > -1){
+            cardToSell.push(listcards[index])
+        }
+        
+    }
 
-    useEffect( ()=> {
-        fetch('/cards')
-            .then(response => response.json())
-            .then((response) => {
-                setCards(response)
-                alert(response)
-            })
-            .catch(error => alert(error))
-    }, [])
 
-    return(
-        <div>
-            <h1> Market</h1>
-        </div>
-    );
+        return(
+            <div>
+                <div className="row">
+                    <div className="left-66">
+                        <LeftSide cards={cardToSell} action="sell"/>
+                    </div>
+                    <div className="right-33">
+                        <RightSide card={selectedcard}/>
+                    </div>
+                </div>
+            </div>
+        );
+    
 }
