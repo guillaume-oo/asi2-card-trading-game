@@ -1,52 +1,44 @@
 import CONFIG from "./config.json" assert {type : "json"};
+import express from "express";
+import http from "http";
+import bodyParser from "body-parser";
+import SocketManager from "./app/SocketManager.mjs";
+import ChatRouter from "./app/routers/ChatRouter.mjs";
 
-const express = require('express');
-const ws = require('ws');
+import {Server} from "socket.io"
 
-const app = express();
+const app = express()
+const server = http.createServer(app);
 
+const io = new Server(server, {
+    cors:{
+        origins:["*"],
 
-
-const wsServer = new ws.Server({ noServer: true });
-
-wsServer.on('connection', socket => {
-    chat = new ChatController(socket);
-    room = new RoomController(socket);
-    game = new GameController(socket);
+    handlePreflightRequest: (req,res) => {
+        res.writeHead(200, {
+            "Access-Control-Allow-Origin":  "*",
+        })
+    }}
 });
 
 
-wsServer.on("connection", (socket) => {
-    // send a message to the client
-    socket.send(JSON.stringify({
-      type: "message notification",
-      content: [ 1, "2" ]
-    }));
+// Handle connection
+io.on("connection", function (socket) {
+    console.log(`Socket ${socket.id} Connected succesfully to the socket ...`);
+    SocketManager.push(socket);
 
-    socket.send(JSON.stringify({
-        type: "room made notification",
-        content: [ 1, "2" ]
-      }));
+    socket.on("disconnect", () => {
+        SocketManager.delete(socket)
+    })
+});
 
-      socket.send(JSON.stringify({
-        type: "damage received notification",
-        content: [ 1, "2" ]
-      }));
+server.listen(CONFIG.port);
 
-      socket.send(JSON.stringify({
-        type: "card changed notification",
-        content: [ 1, "2" ]
-      }));
-  });
+app.use(bodyParser.json({}));
 
+app.use(ChatRouter);
 
-
-
-const server = app.listen(CONFIG.port);
-
-
-
-
-
-
-
+app.use(function(req, res){
+    console.warn(`${req.path} 404`);
+    res.status(404);
+});
