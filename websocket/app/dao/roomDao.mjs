@@ -1,8 +1,8 @@
 var listeRoom = [];
 
-class roomDao {
+class RoomDao {
     constructor({}) {
-        console.log(`new RoomDao`);
+        console.log(`new RoomDAO`);
     }
 
     getAllRoom() {
@@ -31,4 +31,4 @@ class roomDao {
 
 }
     
-module.exports = new roomDao({});
+export default new RoomDao({});

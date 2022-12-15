@@ -20,7 +20,6 @@ class ChatService {
     }
 
     createChat(chat) {
-        let chat = new Chat(chat);
         // notifie les users que le chat est créé ?
         return ChatDAO.addChat(chat);
     }
@@ -41,9 +40,8 @@ class ChatService {
         return MessageDAO.getMessage(messageId);
     }
 
-    addMessageToChat(message, chatId) {
+    addMessageToChat(message) {
         //notifie un user qu'un messages est créé
-        let message = new Message(message,chatId);
         return MessageDAO.addMessage(message);
     }
 }

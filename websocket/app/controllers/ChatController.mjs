@@ -16,7 +16,8 @@ class ChatController {
     }
 
     createChat(request, response) {
-        response.json(ChatService.createChat(request.body));
+        let chat = new Chat(request.body);
+        response.json(ChatService.createChat(chat));
     }
 
     deleteChat(request, response) {
@@ -36,7 +37,8 @@ class ChatController {
     }
 
     createMessage(request, response) {
-        response.json(ChatService.addMessageToChat(request.body,request.params.chatId));
+        let message = new Message(request.body,request.params.chatId);
+        response.json(ChatService.addMessageToChat(message));
     }
 }
 

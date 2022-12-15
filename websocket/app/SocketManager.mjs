@@ -14,7 +14,7 @@ class SocketManager {
     }
 
     delete(socket){
-        listSockets.splice(socket, 1);
+        this.listSockets.splice(socket, 1);
     }
 }
 

@@ -6,10 +6,6 @@ import {SocketContext} from '../../context/socket';
 import "../../css/NavBar/NavBar.css"
 
 export const NavBar= (props) =>{
-
-    const socket = useContext(SocketContext);
-    socket.emit("SEND_JOIN_REQUEST");
-
     let routeHashmap = new Map([
         ['/Auth', 'Log In'],
         ['/Home', 'Home'],

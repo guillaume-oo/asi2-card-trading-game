@@ -1,33 +1,25 @@
-const ChatDao = require('../dao/ChatDao');
-const RoomService = require('../services/RoomService.mjs')
+import RoomService from '../services/RoomService.mjs';
 
 class RoomController {
     constructor({}) {
-        console.log(`new roomService`);
+        console.log(`new RoomController`);
     }
 
     listRoom() {
-        return RoomService.getAllRooms() ;
+        return getAllRooms() ;
     }
 
-    getRoom(roomId) {
-        return RoomService.getRoom(roomID) ;
+    getRoom(request, response) {
+        response.json(RoomService.userWantToPlay(request.params.roomId));
     }
 
-    createRoom(userID){
-        RoomServices.createRoom()
+    joinQueue(request, response){
+        response.json(RoomService.userWantToPlay(request.params.userId));
     }
 
-    startGame(rootID){
-        return(userID)
+    leaveQueue(request, response){
+        response.json(RoomService.userLeftQueue(request.params.userId, request.params.roomsId));
     }
-
-    joinQueue(userID){
-        RoomService.userWantToPlay(userID)
-    }
-
-
-
 }
 
-module.exports = new RoomController({});
+export default new RoomController({});

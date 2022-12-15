@@ -21,7 +21,7 @@ export const Main= (props) =>{
                 dispatch(cardsUpdate(response));    
                 dispatch(selectedCardUpdate(response[0]));            
             })
-            .catch(error => alert(error))
+            .catch(error => console.log(error))
     }, [])
 
     function submitUserHandler(data){
