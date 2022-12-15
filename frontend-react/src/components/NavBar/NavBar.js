@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { User } from '../../components/User/User';
+import {SocketContext} from '../../context/socket';
 
 import "../../css/NavBar/NavBar.css"
 
 export const NavBar= (props) =>{
+
+    const socket = useContext(SocketContext);
+    socket.emit("SEND_JOIN_REQUEST");
+
     let routeHashmap = new Map([
         ['/Auth', 'Log In'],
         ['/Home', 'Home'],
@@ -14,7 +19,6 @@ export const NavBar= (props) =>{
     ])
 
     const routeName= routeHashmap.get(useLocation().pathname);
-
 
     const navigate = useNavigate();
     function handleClickHome() {
