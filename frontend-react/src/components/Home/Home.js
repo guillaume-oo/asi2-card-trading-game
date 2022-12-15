@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import {SocketContext} from '../../context/socket';
+import { useSelector } from "react-redux"
 
 
 export const Home= (props) =>{
+    const user = useSelector(state=>state.myUserReducer.user)
+
     const navigate = useNavigate();
     function handleClickAuth() {
         navigate('/')
@@ -15,8 +18,6 @@ export const Home= (props) =>{
         navigate('/Market-Sell')
     }
 
-    const [id,setId] = useState(101);
-
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' ,
@@ -24,19 +25,11 @@ export const Home= (props) =>{
     };
 
     function handleClickPlay() {
-        
-        fetch('http://localhost:9999/room/join/'+id, requestOptions)
+        fetch('http://localhost:9999/room/join/'+user.id, requestOptions)
             .catch(error => console.log(error))
-
-        
-        setId(id + 1);
     }
 
     const socket = useContext(SocketContext);
-    socket.on("Partner found", data => {
-        navigate('/Play')
-    })
-
     socket.on("You are in queue", data => {
         navigate('/WaitingRoom')
     })

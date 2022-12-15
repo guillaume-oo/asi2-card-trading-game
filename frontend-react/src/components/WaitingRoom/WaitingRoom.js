@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { userUpdate } from "../../core/actions"
 import { useDispatch } from "react-redux";
+import {SocketContext} from '../../context/socket';
 
 export const WaitingRoom = (props) => {
     const navigate = useNavigate();
@@ -18,9 +19,11 @@ export const WaitingRoom = (props) => {
 
     });
 
-    function handleClickPlay() {
+    const socket = useContext(SocketContext);
+    socket.on("Partner found", data => {
         navigate('/Play')
-    }
+    })
+
 
     function getUserByID(userID){
         fetch('http://localhost:8083/user/'+12)
@@ -35,7 +38,6 @@ export const WaitingRoom = (props) => {
     return (
         <div>
             <h1>Waiting Room...</h1>
-            <button onClick={handleClickPlay}> Play Now </button>
         </div>
     );
 }
