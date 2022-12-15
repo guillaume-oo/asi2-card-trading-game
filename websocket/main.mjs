@@ -2,6 +2,7 @@ import CONFIG from "./config.json" assert {type : "json"};
 
 const express = require('express');
 const ws = require('ws');
+const UserRouter = require('./app/routers/GameRouter.mjs');
 
 const app = express();
 
