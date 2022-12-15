@@ -17,12 +17,13 @@ export const GameZone = (props) => {
     const [user2, setUser2] = useState({ userid: 2, card_list: [{ name: "gg" }], action_pts: 1000, isCurrentUser:false });
     const [user1, setuser1] = useState({ userid: 1, card_list: [{ name: "jj" }], action_pts: 1000, isCurrentUser:true });
 
+
     //User1 et User2 sont les joueurs, User est celui qui s'est login
 
     //attackbutton
-    function handleAttackButton(coucou){
+    function handleAttackButton(){
 
-        console.log(coucou);
+        if(user1.isCurrentUser){
         let attaquantId = user1.userid;
         let victimeId = user2.useridid;
         let attaquantCard = selectedcard1;
@@ -43,12 +44,8 @@ export const GameZone = (props) => {
             //todo requete
         }
         console.log("attaque faite de : "+attaquantId + " avec la carte : "+attaquantCard);
-
+        }
         
-        
-        //Verifier le current user pour savoir qui commence
-        // selectedcard1;
-        // selectedcard2;
          //toto recup data et envoyer requete au back 
     }
 
