@@ -8,12 +8,14 @@ import { NavBar } from './components/NavBar/NavBar';
 import { useDispatch, useSelector } from "react-redux/es/exports"
 import { cardsUpdate } from './core/actions';
 import { selectedCardUpdate } from './core/actions';
+import { Play } from './components/Play/Play';
+import { WaitingRoom } from './components/WaitingRoom/WaitingRoom';
 
 export const Main= (props) =>{
     let dispatch=useDispatch();
     
     useEffect( ()=> {
-        fetch('http://tp.cpe.fr:8083/cards')
+        fetch('http://localhost:8083/cards')
             .then(response => response.json())
             .then((response) => {
                 dispatch(cardsUpdate(response));    
@@ -37,7 +39,9 @@ export const Main= (props) =>{
                         <Route path='/Home' element={<Home/>} />
                         <Route path='/Market-Buy' element={<MarketBuy />} />
                         <Route path='/Market-Sell' element={<MarketSell/>} />
-                        {/* <Route path='/Play' element={<Market/>} /> */}
+                        <Route path='/Play' element={<Play/>} />
+                        <Route path='/WaitingRoom' element={<WaitingRoom/>} />
+
 
                     </Routes>
                 </div>

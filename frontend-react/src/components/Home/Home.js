@@ -13,17 +13,18 @@ export const Home= (props) =>{
     function handleClickSellCards() {
         navigate('/Market-Sell')
     }
-    function handleClickPlay() {
-        navigate('/Play')
+
+    function handleClickWaitingRoom() {
+        navigate('/WaitingRoom')
     }
 
     return(
         <div>
             <h1> Welcome to card game</h1>
-            {/* <button onClick={handleClickAuth}>Auth</button> */}
+            <button onClick={handleClickAuth}>Auth</button>
             <button onClick={handleClickBuyCards}>Buy Cards</button> 
             <button onClick={handleClickSellCards}>Sell Cards</button> 
-            <button onClick={handleClickPlay}>Play</button> 
+            <button onClick={handleClickWaitingRoom}>Start a game</button> 
         </div>
     );
 }

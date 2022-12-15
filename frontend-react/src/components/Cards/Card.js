@@ -1,9 +1,11 @@
 import React from 'react';
 import {Visual} from './containers/Visual';
 import { Description } from './containers/Description';
-
+import { useDispatch } from "react-redux/es/exports";
+import { selectedCardUpdate } from '../../core/actions';
 
 export const Card =(props) =>{
+
     if (props.card != null){
         return (
             <div class="ui special cards">
