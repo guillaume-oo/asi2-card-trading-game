@@ -1,7 +1,10 @@
 package com.cpe.springboot;
 
+import java.util.Queue;
+
 import javax.jms.ConnectionFactory;
 
+import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,8 +35,6 @@ public class CardMngMonolithicApplication {
         configurer.configure(factory, connectionFactory);
         // You could still override some of Boot's default if necessary.
 
-        //enable topic mode
-        //factory.setPubSubDomain(true);	//pour ne plus mettre en mode queue
         return factory;
     }
 

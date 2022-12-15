@@ -1,7 +1,5 @@
 {
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.9.1",
-    "react-redux": "^8.0.5",
-    "redux": "^4.2.0"
-  }
+    "scripts":{
+        "run": "npm run frontend-react/start && npm run script2"
+    }
 }

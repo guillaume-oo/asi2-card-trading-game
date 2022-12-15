@@ -7,10 +7,7 @@ import {Main} from './Main';
 import 'semantic-ui-css/semantic.min.css'
 import './css/index.css'
 import store from './core/reducers/store';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
-//Insert a <Main> component inside the <div id='root'/>
-// send the property title to the App component
 ReactDOM.render(
     <Provider store={store}>
         <Main />

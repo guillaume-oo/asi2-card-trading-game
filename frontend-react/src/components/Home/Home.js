@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import {SocketContext} from '../../context/socket';
 
 
 export const Home= (props) =>{
@@ -14,9 +15,31 @@ export const Home= (props) =>{
         navigate('/Market-Sell')
     }
 
-    function handleClickWaitingRoom() {
-        navigate('/WaitingRoom')
+    const [id,setId] = useState(101);
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' ,
+            "Access-Control-Allow-Origin": "*"}
+    };
+
+    function handleClickPlay() {
+        
+        fetch('http://localhost:9999/room/join/'+id, requestOptions)
+            .catch(error => console.log(error))
+
+        
+        setId(id + 1);
     }
+
+    const socket = useContext(SocketContext);
+    socket.on("Partner found", data => {
+        navigate('/Play')
+    })
+
+    socket.on("You are in queue", data => {
+        navigate('/WaitingRoom')
+    })
 
     return(
         <div>
@@ -24,7 +47,7 @@ export const Home= (props) =>{
             <button onClick={handleClickAuth}>Auth</button>
             <button onClick={handleClickBuyCards}>Buy Cards</button> 
             <button onClick={handleClickSellCards}>Sell Cards</button> 
-            <button onClick={handleClickWaitingRoom}>Start a game</button> 
+            <button onClick={handleClickPlay}>Start a game</button> 
         </div>
     );
 }
