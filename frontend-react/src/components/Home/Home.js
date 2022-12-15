@@ -38,18 +38,16 @@ export const Home= (props) =>{
     })
 
     socket.on("You are in queue", data => {
-        console.log("waiting for a partner")
+        navigate('/WaitingRoom')
     })
 
     return(
         <div>
             <h1> Welcome to card game</h1>
-            {/* <button onClick={handleClickAuth}>Auth</button> */}
+            <button onClick={handleClickAuth}>Auth</button>
             <button onClick={handleClickBuyCards}>Buy Cards</button> 
             <button onClick={handleClickSellCards}>Sell Cards</button> 
-            <button onClick={handleClickPlay}>Play</button> 
-
-
+            <button onClick={handleClickPlay}>Start a game</button> 
         </div>
     );
 }
