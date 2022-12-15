@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { User } from '../../components/User/User';
+import {SocketContext} from '../../context/socket';
 
 import "../../css/NavBar/NavBar.css"
 
@@ -14,7 +15,6 @@ export const NavBar= (props) =>{
     ])
 
     const routeName= routeHashmap.get(useLocation().pathname);
-
 
     const navigate = useNavigate();
     function handleClickHome() {
