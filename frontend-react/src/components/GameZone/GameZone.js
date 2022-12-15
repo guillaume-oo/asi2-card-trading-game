@@ -17,12 +17,6 @@ export const GameZone = (props) => {
     const [user2, setUser2] = useState({ userid: 2, card_list: [{ name: "gg" }], action_pts: 1000, isCurrentUser:false });
     const [user1, setuser1] = useState({ userid: 1, card_list: [{ name: "jj" }], action_pts: 1000, isCurrentUser:true });
 
-    //Une fois qu'on récupère les 2 users on les dispatch à tout le monde
-    //pas necessaire de dispatch, je crois
-    // const dispatch=useDispatch(); 
-    // dispatch(updateUser1(user1));
-    // dispatch(updateUser2(user2));
-
     //User1 et User2 sont les joueurs, User est celui qui s'est login
 
     //attackbutton

@@ -8,11 +8,11 @@ export const Play = (props) => {
     const navigate = useNavigate();
 
     return (
-        <div className="row">
-                <div className="left-20">
+        <div className="ui grid">
+                <div className="four wide column">
                     <Chat />
                 </div>
-                <div className="right-80">
+                <div className="twelve wide column">
                     <GameZone />
                 </div>
             </div>
