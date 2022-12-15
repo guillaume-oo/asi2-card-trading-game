@@ -1,21 +1,33 @@
 const ChatDao = require('../dao/ChatDao');
+const RoomService = require('../services/RoomService.mjs')
 
-class ChatService {
+class RoomController {
     constructor({}) {
-        console.log(`new ChatService`);
+        console.log(`new roomService`);
     }
 
-    listChat() {
-        return ChatDao.getAllChats();
+    listRoom() {
+        return RoomService.getAllRooms() ;
     }
 
-    getChat(ChatId) {
-        return ChatDao.getChat(ChatId);
+    getRoom(roomId) {
+        return RoomService.getRoom(roomID) ;
     }
 
-    addChat(Chat) {
-        return ChatDao.createChat(Chat);
+    createRoom(userID){
+        RoomServices.createRoom()
     }
+
+    startGame(rootID){
+        return(userID)
+    }
+
+    joinQueue(userID){
+        RoomService.userWantToPlay(userID)
+    }
+
+
+
 }
 
-module.exports = new ChatService({});
+module.exports = new RoomController({});
