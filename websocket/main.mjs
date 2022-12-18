@@ -1,53 +1,57 @@
 import CONFIG from "./config.json" assert {type : "json"};
+import express from "express";
+import http from "http";
+import cors from "cors";
+import bodyParser from "body-parser";
+import SocketManager from "./app/SocketManager.mjs";
+import ChatRouter from "./app/routers/ChatRouter.mjs";
+import RoomRouter from "./app/routers/RoomRouter.mjs";
 
-const express = require('express');
-const ws = require('ws');
-const UserRouter = require('./app/routers/GameRouter.mjs');
-
-const app = express();
+import {Server} from "socket.io"
 
 
+const app = express()
 
-const wsServer = new ws.Server({ noServer: true });
+app.use(cors({
+    origin: "*"
+}));
 
-wsServer.on('connection', socket => {
-    chat = new ChatController(socket);
-    room = new RoomController(socket);
-    game = new GameController(socket);
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors:{
+        origins:["*"],
+
+    handlePreflightRequest: (req,res) => {
+        res.writeHead(200, {
+            "Access-Control-Allow-Origin":  "*",
+        })
+    }}
 });
 
 
-wsServer.on("connection", (socket) => {
-    // send a message to the client
-    socket.send(JSON.stringify({
-      type: "message notification",
-      content: [ 1, "2" ]
-    }));
+// Handle connection
+io.on("connection", function (socket) {
+    console.log(`Socket ${socket.id} Connected succesfully ...`);
+    SocketManager.push(socket);
 
-    socket.send(JSON.stringify({
-        type: "room made notification",
-        content: [ 1, "2" ]
-      }));
+    socket.on("disconnect", () => {
+        console.log(`Socket ${socket.id} Disconnected ...`);
+        
+        SocketManager.delete(socket)
 
-      socket.send(JSON.stringify({
-        type: "damage received notification",
-        content: [ 1, "2" ]
-      }));
+        console.log(`Sockets connected:  ${SocketManager.getAll().length}`);
+    })
+});
 
-      socket.send(JSON.stringify({
-        type: "card changed notification",
-        content: [ 1, "2" ]
-      }));
-  });
+server.listen(CONFIG.port);
 
+app.use(bodyParser.json({}));
 
+app.use(ChatRouter);
+app.use(RoomRouter);
 
-
-const server = app.listen(CONFIG.port);
-
-
-
-
-
-
-
+app.use(function(req, res){
+    console.warn(`${req.path} 404`);
+    res.status(404);
+});

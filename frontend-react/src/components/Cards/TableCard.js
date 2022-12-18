@@ -19,10 +19,6 @@ export const TableCard =(props) =>{
 
     function ActionCard(card){
         let CardId = parseInt(props.card.id);
-
-        console.log("TEST CARD ID: " + CardId + " FOR USER: " + UserId)
-        console.log("TEST CARD ACTION TYPE: " + props.action)
-            console.log("UserId type: " + typeof(UserId) + " cardId type: " + typeof(CardId))
             fetch('http://localhost:8083/store/'+props.action,{
             method: 'POST',
             headers: {

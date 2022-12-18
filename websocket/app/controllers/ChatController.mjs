@@ -1,5 +1,6 @@
-const ChatService = require('../services/');
-const Chat = require('');
+import ChatService from "../services/ChatService.mjs";
+import Chat from "../models/Chat.mjs";
+import Message from "../models/Message.mjs";
 
 class ChatController {
     constructor({}) {
@@ -11,18 +12,34 @@ class ChatController {
     }
 
     getChat(request, response) {
-        response.json(ChatService.getChat(request.params.ChatId));
+        response.json(ChatService.getChat(request.params.chatId));
     }
 
     createChat(request, response) {
-        let Chat = new Chat(request.body);
-        Chat = ChatService.addChat(Chat);
-        response.json(Chat);
+        let chat = new Chat(request.body);
+        response.json(ChatService.createChat(chat));
     }
 
-    updateChat(request, response) {}
+    deleteChat(request, response) {
+        response.json(ChatService.deleteChat(request.params.chatId));
+    }
 
-    deleteChat(request, response) {}
+    getMessages(request, response) {
+        response.json(ChatService.listChat());
+    }
+
+    getMessage(request, response) {
+        response.json(ChatService.getChat(request.params.chatId));
+    }
+
+    getMessagesFromChat(request, response) {
+        response.json(ChatService.getMessagesFromChat(request.params.chatId));
+    }
+
+    createMessage(request, response) {
+        let message = new Message(request.body,request.params.chatId);
+        response.json(ChatService.addMessageToChat(message));
+    }
 }
 
-module.exports = new ChatController({});
+export default new ChatController({});

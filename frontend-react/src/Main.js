@@ -8,6 +8,10 @@ import { NavBar } from './components/NavBar/NavBar';
 import { useDispatch, useSelector } from "react-redux/es/exports"
 import { cardsUpdate } from './core/actions';
 import { selectedCardUpdate } from './core/actions';
+import { Play } from './components/Play/Play';
+import { WaitingRoom } from './components/WaitingRoom/WaitingRoom';
+
+import {SocketContext, socket} from './context/socket.js';
 
 export const Main= (props) =>{
     let dispatch=useDispatch();
@@ -19,7 +23,7 @@ export const Main= (props) =>{
                 dispatch(cardsUpdate(response));    
                 dispatch(selectedCardUpdate(response[0]));            
             })
-            .catch(error => alert(error))
+            .catch(error => console.log(error))
     }, [])
 
     function submitUserHandler(data){
@@ -29,19 +33,21 @@ export const Main= (props) =>{
     // return JSX components
      return (
         <>
-            <BrowserRouter>
-                <NavBar/>
-                <div className='body-content'>
-                    <Routes>
-                        <Route path='/' element={<Auth submitUserHandler={submitUserHandler}/>} />
-                        <Route path='/Home' element={<Home/>} />
-                        <Route path='/Market-Buy' element={<MarketBuy />} />
-                        <Route path='/Market-Sell' element={<MarketSell/>} />
-                        {/* <Route path='/Play' element={<Market/>} /> */}
-
-                    </Routes>
-                </div>
-        </BrowserRouter>
+            <SocketContext.Provider value={socket}>
+                <BrowserRouter>
+                    <NavBar/>
+                    <div className='body-content'>
+                        <Routes>
+                            <Route path='/' element={<Auth submitUserHandler={submitUserHandler}/>} />
+                            <Route path='/Home' element={<Home/>} />
+                            <Route path='/Market-Buy' element={<MarketBuy />} />
+                            <Route path='/Market-Sell' element={<MarketSell/>} />
+                        <Route path='/Play' element={<Play/>} />
+                        <Route path='/WaitingRoom' element={<WaitingRoom/>} />
+                        </Routes>
+                    </div>
+            </BrowserRouter>
+        </SocketContext.Provider>
     </>
  );
   
