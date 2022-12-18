@@ -1,5 +1,0 @@
-{
-    "scripts":{
-        "run": "npm run frontend-react/start && npm run script2"
-    }
-}

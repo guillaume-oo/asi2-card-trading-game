@@ -1,11 +1,9 @@
-/target/
+target
 .metadata/
 .settings/
 .project
 .code
 .classpath
 *.iml
-/frontend-react/node_modules/*
-/frontend-react/node_modules/
-/websocket/node_modules/**
-/frontend-react/package-lock.json
+node_modules
+package-lock.json
