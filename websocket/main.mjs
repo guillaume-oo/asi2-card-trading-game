@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import SocketManager from "./app/SocketManager.mjs";
 import ChatRouter from "./app/routers/ChatRouter.mjs";
 import RoomRouter from "./app/routers/RoomRouter.mjs";
-
+import GameRouter from "./app/routers/GameRouter.mjs";
 import {Server} from "socket.io"
 
 
@@ -49,6 +49,7 @@ server.listen(CONFIG.port);
 app.use(bodyParser.json({}));
 
 app.use(ChatRouter);
+app.use(GameRouter);
 app.use(RoomRouter);
 
 app.use(function(req, res){
