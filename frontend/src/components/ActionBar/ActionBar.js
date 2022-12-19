@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { User } from '../../components/User/User';
 
 export const ActionBar= (props) =>{
-    const user=useSelector(state=>state.myUserReducer.user);
+    const user=useSelector(state=>state.userReducer.user);
 
 
     return(

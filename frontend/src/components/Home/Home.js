@@ -5,11 +5,14 @@ import { useSelector } from "react-redux"
 
 
 export const Home= (props) =>{
-    const user = useSelector(state=>state.myUserReducer.user)
-
     const navigate = useNavigate();
+    const user = useSelector(state=>state.userReducer.user)
+
+    function handleClickCreateUser() {
+        navigate('/sign-up')
+    }
     function handleClickAuth() {
-        navigate('/')
+        navigate('/auth')
     }
     function handleClickBuyCards() {
         navigate('/Market-Buy')
@@ -25,18 +28,19 @@ export const Home= (props) =>{
     };
 
     function handleClickPlay() {
-        fetch('http://localhost:9999/room/join/'+user.id, requestOptions)
+        fetch('http://localhost:9999/room/join/'+user.id +'/100', requestOptions)
             .catch(error => console.log(error))
     }
 
     const socket = useContext(SocketContext);
-    socket.on("You are in queue", data => {
+    socket.on("user-put-in-queue", data => {
         navigate('/WaitingRoom')
     })
 
     return(
         <div>
             <h1> Welcome to card game</h1>
+            <button onClick={handleClickCreateUser}>CreateUser</button> 
             <button onClick={handleClickAuth}>Auth</button>
             <button onClick={handleClickBuyCards}>Buy Cards</button> 
             <button onClick={handleClickSellCards}>Sell Cards</button> 

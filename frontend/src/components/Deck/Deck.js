@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CardShort } from '../Cards/CardShort';
 import { useSelector, useDispatch } from "react-redux"
 import { Card } from 'semantic-ui-react';
-import { updateselectedcard1,updateSelectedCard2 } from '../../core/actions';
+import { gameSelectedCardUpdate,gameAdversarySelectedCardUpdate } from '../../core/actions';
 
 export const Deck = (props) => {
     const navigate = useNavigate();
@@ -12,9 +12,9 @@ export const Deck = (props) => {
     // function handleOnClick(card){
     //     console.log("handleOnClick card: "+ card)
     //     if(props.isCurrentUser){
-    //         dispatch(updateselectedcard1(card));
+    //         dispatch(gameSelectedCardUpdate(card));
     //     }else{
-    //         dispatch(updateSelectedCard2(card));
+    //         dispatch(gameAdversarySelectedCardUpdate(card));
     //     }
     // }
 

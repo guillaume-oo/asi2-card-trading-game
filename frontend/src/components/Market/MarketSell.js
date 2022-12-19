@@ -8,7 +8,7 @@ export const MarketSell= (props) =>{
 
     const listcards = useSelector(state=>state.cardReducer.cards);
     const selectedcard = useSelector(state=>state.cardReducer.selectedCard);
-    const user = useSelector(state=>state.myUserReducer.user);
+    const user = useSelector(state=>state.userReducer.user);
     const UserCards = user.cardList;
     let cardToSell = [];
     

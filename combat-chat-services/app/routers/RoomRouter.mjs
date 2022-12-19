@@ -6,11 +6,8 @@ const BASE_PATH = '/room';
 const RoomRouter = Router();
 export default RoomRouter;
 
-RoomRouter.route(`${BASE_PATH}/join/:userId`)
+RoomRouter.route(`${BASE_PATH}/join/:userId/:reward`)
     .post(RoomController.joinQueue);
 
 RoomRouter.route(`${BASE_PATH}/leave/:userId/:roomId`)
-    .post(RoomController.joinQueue);
-
-RoomRouter.route(`${BASE_PATH}/:roomId`)
-    .get(RoomController.joinQueue);
+    .post(RoomController.leaveQueue);

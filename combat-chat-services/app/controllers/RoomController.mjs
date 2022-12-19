@@ -9,12 +9,8 @@ class RoomController {
         return getAllRooms() ;
     }
 
-    getRoom(request, response) {
-        response.json(RoomService.userWantToPlay(request.params.roomId));
-    }
-
     joinQueue(request, response){
-        response.json(RoomService.userWantToPlay(request.params.userId));
+        response.json(RoomService.userWantToPlay(request.params.userId, request.params.reward));
     }
 
     leaveQueue(request, response){

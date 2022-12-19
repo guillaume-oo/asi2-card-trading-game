@@ -2,8 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux"
 
 export const User = ()=>{
-    const user = useSelector(state=>state.myUserReducer.user)
-    console.log("saved user: " + JSON.stringify(user));
+    const user = useSelector(state=>state.userReducer.user)
 
     if (user.login === undefined){
         return ( 
