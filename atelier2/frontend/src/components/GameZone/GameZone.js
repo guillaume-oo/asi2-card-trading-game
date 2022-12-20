@@ -19,12 +19,11 @@ export const GameZone = (props) => {
     const selectedcard2 = useSelector(state=>state.gameReducer.selected_card_u2)
    
     
-//----recuperer via requete / listen socket----
-    const [user2, setUser2] = useState({ userid: 6, userSurname: "a", card_list: [{ name: "gg", id: 1, hp: 10, attack: 5, defense: 1, energy: 60 }], action_pts: 1000, isCurrentUser: false });   //isCurrentUser = playing user
-    const [user1, setuser1] = useState({ userid: 13, userSurname: "b", card_list: [{ name: "jj", id: 2, hp: 10, attack: 5, defense: 2, energy:500 }], action_pts: 1000, isCurrentUser: true });
-    //const user1 = {};
-    //const user2 = {};
-    //with socket do fetch request-------------------------!!arriver a le mettre en place!!--------------------------------
+//----recuperer users via requete / listen socket----
+    //const [user2, setUser2] = useState({ userid: 7, userSurname: "a", card_list: [{ name: "gg", id: 1, hp: 10, attack: 5, defense: 1, energy: 60 }], action_pts: 1000, isCurrentUser: false });   //isCurrentUser = playing user
+    //const [user1, setuser1] = useState({ userid: 14, userSurname: "b", card_list: [{ name: "jj", id: 2, hp: 10, attack: 5, defense: 2, energy:500 }], action_pts: 1000, isCurrentUser: true });
+
+    //with socket do fetch request          -------------------------!!arriver a le mettre en place!!-------------------------------------------------------------------------------------------------------------------------------------
     const socket = useContext(SocketContext);
     socket.on("game_users_id", (arg1, arg2) => {
         const userid1 = arg1;
@@ -32,24 +31,29 @@ export const GameZone = (props) => {
         console.log("users id from the Node via socket: " + userid1 +", "+ userid2);
 
         //requete pour recup les users complets
-        const user1 = sendFetchGETuserId(6);    //userid1 (a mettre quand on enverra la VRAIE socket)
-        const user2 = sendFetchGETuserId(13);   //userid2
-        console.log("get users by fetch: " + user1 + user2);
+            //remettre ici
     })
 
+    //------------------------------error ici j'arrive pas a retourner une valeur de ma requete get--------------------------------------------
+    var user1 = getUserByID(7);    //userid1 (a mettre quand on enverra la VRAIE socket)
+    var user2 = getUserByID(14);   //userid2
+    console.log("get users by fetch: " + user1 + user2);    //=true true
 
-    function sendFetchGETuserId(userid) {
-        fetch('http://localhost:8083/user' + userid, {
+
+    function getUserByID(userID) {
+        fetch('http://localhost:8083/user/' + userID, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*"
-            },
-
+            }
         })
+            .then(response => {
+                if (response.status == 200) { return response.json(); }
+            })
             .then(data => {
-                console.log("Fetched user: " + JSON.stringify(data));
-                return data;
+                console.log("Fetched user GameZone: " + JSON.stringify(data.cardList));
+                dispatch(refreshUser1(data));
             })
             .catch(error => console.log(error))
     }
@@ -137,72 +141,72 @@ export const GameZone = (props) => {
 
         if (user1.isCurrentUser) {  //user1 is attanquant
             let ind_card = -1;
-            for (let i = 0; i < user1.card_list.length; i++) {
-                console.log("id card: " + user1.card_list[i].id);
+            for (let i = 0; i < user1.cardList.length; i++) {
+                console.log("id card: " + user1.cardList[i].id);
                 console.log("id arg1: " + arg1.id);
-                if (user1.card_list[i].id == arg1.id) {
+                if (user1.cardList[i].id == arg1.id) {
                     ind_card = i;
                     break;
                 }
                 
             }
-            user1.card_list[ind_card].hp = arg1.hp;             //on "refresh" les hp
+            user1.cardList[ind_card].hp = arg1.hp;             //on "refresh" les hp
             user1.action_pts = Number(arg2);                    //put new points total
             console.log("new points : " + user1.action_pts);
-            console.log("new card list attacker : " + Object.values(user1.card_list[0]));
+            console.log("new card list attacker : " + Object.values(user1.cardList[0]));
                 //->for victime update
             let ind_cardv = -1;
             let i = 0;
-            for (const card in user2.card_list) {
+            for (const card in user2.cardList) {
                 if (card.id == arg3.id) {
                     ind_cardv = i;
                     break;
                 }
                 i++;
             }
-            user2.card_list[ind_card].hp = arg1.hp;
-            console.log("new card list victime: " + Object.values(user2.card_list[0]));
+            user2.cardList[ind_card].hp = arg1.hp;
+            console.log("new card list victime: " + Object.values(user2.cardList[0]));
         }
 
         if (user2.isCurrentUser) {  //user2 attaquant
             let ind_card = -1;
-            for (let i = 0; i < user2.card_list.length; i++) {
-                console.log("id card: " + user2.card_list[i].id);
+            for (let i = 0; i < user2.cardList.length; i++) {
+                console.log("id card: " + user2.cardList[i].id);
                 console.log("id arg1: " + arg1.id);
-                if (user2.card_list[i].id == arg1.id) {
+                if (user2.cardList[i].id == arg1.id) {
                     ind_card = i;
                     break;
                 }
 
             }
-            user2.card_list[ind_card].hp = arg1.hp;             //on "refresh" les hp
+            user2.cardList[ind_card].hp = arg1.hp;             //on "refresh" les hp
             user2.action_pts = Number(arg2);                    //put new points total
             console.log("new points : " + user2.action_pts);
-            console.log("new card list attacker: " + Object.values(user2.card_list[0]));
+            console.log("new card list attacker: " + Object.values(user2.cardList[0]));
                 //->for victime update
             let ind_cardv = -1;
             let i = 0;
-            for (const card in user1.card_list) {
+            for (const card in user1.cardList) {
                 if (card.id == arg3.id) {
                     ind_cardv = i;
                     break;
                 }
                 i++;
             }
-            user1.card_list[ind_card].hp = arg1.hp;
-            console.log("new card list victime: " + Object.values(user1.card_list[0]));
+            user1.cardList[ind_card].hp = arg1.hp;
+            console.log("new card list victime: " + Object.values(user1.cardList[0]));
 
 
 
 
-            let ind_card2 = user2.card_list.indexOf(arg1.id);
-            user2.card_list.splice(ind_card2, 1, arg1);      //on remplace par la nouvelle card
+            let ind_card2 = user2.cardList.indexOf(arg1.id);
+            user2.cardList.splice(ind_card2, 1, arg1);      //on remplace par la nouvelle card
             user2.action_pts = arg2;                        //put new points total
-            console.log("new card list : " + Object.values(user2.card_list));
+            console.log("new card list : " + Object.values(user2.cardList));
                 //for victime update
-            let ind_cardv2 = user1.card_list.indexOf(arg3.id);
-            user1.card_list.splice(ind_cardv2, 1, arg3);
-            console.log("Victime card changed : " + Object.values(user1.card_list[0]))
+            let ind_cardv2 = user1.cardList.indexOf(arg3.id);
+            user1.cardList.splice(ind_cardv2, 1, arg3);
+            console.log("Victime card changed : " + Object.values(user1.cardList[0]))
         }
 
         //dispatch les users, donc leurs cartes

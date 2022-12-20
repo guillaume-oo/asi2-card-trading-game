@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\combat-chat-services",
-    "\\combat-chat-services\\app",
-    "\\combat-chat-services\\app\\dao",
-    "\\combat-chat-services\\app\\dto",
-    "\\combat-chat-services\\app\\models",
-    "\\combat-chat-services\\app\\routers",
     "\\frontend",
     "\\frontend\\src",
-    "\\frontend\\src\\components\\WaitingRoom"
+    "\\frontend\\src\\components",
+    "\\frontend\\src\\components\\Cards",
+    "\\frontend\\src\\components\\GameZone",
+    "\\frontend\\src\\components\\PlayerBoard",
+    "\\frontend\\src\\core",
+    "\\frontend\\src\\core\\actions",
+    "\\frontend\\src\\core\\reducers"
   ],
-  "SelectedNode": "\\frontend\\src\\components",
+  "SelectedNode": "\\frontend\\src\\components\\GameZone\\GameZone.js",
   "PreviewInSolutionExplorer": false
 }

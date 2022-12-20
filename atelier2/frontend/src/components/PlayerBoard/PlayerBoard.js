@@ -12,10 +12,10 @@ export const PlayerBoard= (props) =>{
    
 
     let cardsToPlay = [];
-    for(var i = 0; i< props.user.card_list.length; i++){
-        const index = props.user.card_list.findIndex(card => card.id == props.user.card_list[i])
+    for (var i = 0; i < props.user.cardList.length; i++){
+        const index = props.user.cardList.findIndex(card => card.id == props.user.cardList[i])
         if(index > -1){
-            cardsToPlay.push(props.user.card_list[index])
+            cardsToPlay.push(props.user.cardList[index])
         }
         console.log("cardsToPlay dans player board: " + cardsToPlay);
     }
@@ -27,7 +27,7 @@ export const PlayerBoard= (props) =>{
                 <UserBoard userId={props.user.userid} userSurname={props.user.userSurname} actionPoints={props.user.action_pts}></UserBoard>
             </div>
             <div className='eight wide column'>
-               <Deck isCurrentUser={props.user.isCurrentUser} cards={props.user.card_list}/>
+                <Deck isCurrentUser={props.user.isCurrentUser} cards={props.user.cardList}/>
             </div>
             <div className='four wide column'>
                 <RightSide card={props.selectedCard}/>

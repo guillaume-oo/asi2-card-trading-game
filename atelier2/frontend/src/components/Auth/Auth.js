@@ -43,7 +43,7 @@ export const Auth = (props) =>{
         })
         .then((data) => {
             console.log(data)
-            if (getUserByID(data) && sendUserIDToSocket(data)){
+            if (getUserByID(data) && sendUserIDToSocket(data)) {
                 navigate('/home')
             }else{
                 throw new Error('User not found');
