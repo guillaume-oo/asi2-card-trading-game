@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\combat-chat-services",
+    "\\combat-chat-services\\app",
+    "\\combat-chat-services\\app\\dao",
+    "\\combat-chat-services\\app\\dto",
+    "\\combat-chat-services\\app\\models",
+    "\\combat-chat-services\\app\\routers",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\components\\WaitingRoom"
+  ],
+  "SelectedNode": "\\frontend\\src\\components",
+  "PreviewInSolutionExplorer": false
+}
