@@ -35,9 +35,14 @@ export const GameZone = (props) => {
     })
 
     //------------------------------error ici j'arrive pas a retourner une valeur de ma requete get--------------------------------------------
-    var user1 = getUserByID(7);    //userid1 (a mettre quand on enverra la VRAIE socket)
-    var user2 = getUserByID(14);   //userid2
-    console.log("get users by fetch: " + user1 + user2);    //=true true
+    getUserByID(7);    //userid1 (a mettre quand on enverra la VRAIE socket)
+    var user1 = useSelector(state => state.gameReducer.user1)
+    console.log("user by fetch et dispatch:" + user1);
+
+    getUserByID(14);   //userid2
+    var user2 = useSelector(state => state.gameReducer.user1);
+    //useEffect
+    console.log("user by fetch et dispatch:" + user1 + user2);    //=true true
 
 
     function getUserByID(userID) {
@@ -56,6 +61,7 @@ export const GameZone = (props) => {
                 dispatch(refreshUser1(data));
             })
             .catch(error => console.log(error))
+        return data;
     }
 
 //User1 et User2 sont les joueurs, choisir a qui c'est le tour

@@ -24,13 +24,13 @@ class RoomService {
             var socket2 = socketManager.getSocketFromUserId(joiningUserID);
 
             if (this.createChatRoomRemotly(room.waintingUser,joiningUserID) && this.createGameRoomRemotly(room.waintingUser,joiningUserID)){
-                socket1.emit("room-created", "room-"+room.waintingUser+"-"+joiningUserID);
-                socket2.emit("room-created", "room-"+room.waintingUser+"-"+joiningUserID);
+                socket1.emit("room-created", "room-"+room.waitingUser+"-"+joiningUserID);
+                socket2.emit("room-created", "room-"+room.waitingUser+"-"+joiningUserID);
                 
             }
             //to create a game
-            console.log("user1 send :" + room.waintingUser);    //-------ne connait pas !!!!!!!!!!!!!!!!!!!!!!!!! undefined
-            gameController.createGameRoomRemotly(room.waintingUser, joiningUserID);
+            console.log("user1 send :" + room.waitingUser);    //-------ne connait pas !!!!!!!!!!!!!!!!!!!!!!!!! undefined
+            gameController.createGameRoomRemotly(room.waitingUser, joiningUserID);
         }
     }
 
