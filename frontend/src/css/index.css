@@ -1,4 +1,5 @@
 @import url("Card/Card.css");
+@import url("User/User.css");
 @import url("NavBar/NavBar.css");
 
 
@@ -24,7 +25,7 @@ code {
 }
 
 .hidden{
-    display: none;
+    display: none !important;
 }
 
 .row{

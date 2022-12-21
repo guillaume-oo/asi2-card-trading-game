@@ -1,6 +1,6 @@
 import RoomDao from '../dao/RoomDao.mjs';
 import socketManager from "../../app/SocketManager.mjs";
-import util from 'util'
+import util from 'util';
 
 class RoomService {
     constructor({}) {

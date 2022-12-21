@@ -14,7 +14,6 @@ export const Auth = (props) =>{
                                         password:"",
                                     });
 
-
     function processInput(event){
         const target = event.currentTarget;
         var name = target.name;
@@ -23,8 +22,7 @@ export const Auth = (props) =>{
         setCurrentUser({...currentUser, [name]: value});
     };
 
-    function loginUser(data){
-        console.log("current user : " + JSON.stringify(currentUser) );
+    function loginUser(){
         fetch('http://localhost:8083/auth',{
             method: 'POST',
             headers: {
@@ -44,7 +42,7 @@ export const Auth = (props) =>{
         .then((data) => {
             console.log(data)
             if (getUserByID(data) && sendUserIDToSocket(data)){
-                navigate('/home')
+                navigate('/home');
             }else{
                 throw new Error('User not found');
             }
