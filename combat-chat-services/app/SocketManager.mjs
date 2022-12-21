@@ -16,11 +16,11 @@ class SocketManager {
 
     getSocketFromUserId(userID){
         var socketID = this.userMap.get(Number(userID));
-        console.log(util.inspect(this.userMap, {depth: null}))
-        console.log("id de la socket :" + socketID)
-        console.log("ca return :" + this.socketMap.get(socketID))
-        console.log("user id :" + Number(userID))
-        console.log("user id sans  nulber :" + userID)
+        // console.log(util.inspect(this.userMap, {depth: null}))
+        // console.log("id de la socket :" + socketID)
+        // console.log("ca return :" + this.socketMap.get(socketID))
+        // console.log("user id :" + Number(userID))
+        // console.log("user id sans  nulber :" + userID)
         return this.socketMap.get(socketID);
     }
 

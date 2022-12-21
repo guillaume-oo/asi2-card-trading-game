@@ -16,7 +16,7 @@ class ChatDAO {
     }
 
     getChat(chatId) {
-        return this.chatRooms.filter(chat=> chat.id == chatId);
+        return this.chatRooms.filter(chat=> chat.id == chatId)[0];
     }
 
     addChat(chat) {
@@ -36,9 +36,8 @@ class ChatDAO {
     createMessage(chatId,userId,text) {
         var message = new Message(this.messages.length+1, chatId, userId,text);
         this.messages.push(message);
-        return this.message;
+        return message;
     }
 }
-
 
 export default new ChatDAO({});

@@ -1,5 +1,5 @@
 class Message {
-    constructor({id, chatId, authorId, text}) {
+    constructor(id, chatId, authorId, text) {
         this.id = id;
         this.chatId = chatId;
         this.authorId = authorId;

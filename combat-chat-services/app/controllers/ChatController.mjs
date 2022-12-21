@@ -48,9 +48,7 @@ class ChatController {
 
     //quand un utilisateur poste un nouveau message, il faut recuperer le chatroom puit socket.emit a tous les utilisateurs de ce chat
     newMessage(request,response){
-        console.log("le message c'est : " + request.body );
-        response.json(ChatService.sendMessage(request.params.chatId , request.params.userId, request.body ));
-        
+        response.json(ChatService.sendMessage(request.params.chatId , request.params.userId, request.body.message ));
     }
 }
 

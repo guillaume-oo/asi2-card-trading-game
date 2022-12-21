@@ -9,6 +9,7 @@ export const Chat = (props) => {
     const chatRoomId = useSelector(state=>state.chatReducer.chatRoomId);
     const chatMessages = useSelector(state=>state.chatReducer.chatMessages);
     const user = useSelector(state=>state.userReducer.user);
+    const socket = useContext(SocketContext);
 
     const handleSendMessage = (event) => {
         event.preventDefault();
@@ -25,10 +26,15 @@ export const Chat = (props) => {
         .catch(error => console.log(error));
     }
 
-    const socket = useContext(SocketContext);
+    function isMessageAlreadyRecieved(message){
+        return chatMessages.some(item => message.id === item.id);
+    }
+
     socket.on("new-message-received", data => {
-        console.log("new messages recieved: " + data);
-        dispatch(chatRoomMessagesUpdate(chatMessages.push(data)));
+        if (!isMessageAlreadyRecieved(data)) {
+            console.log("new messages recieved: " + data);
+            dispatch(chatRoomMessagesUpdate(data));
+        }
     })
 
     socket.on("chat-room-created", data => {
@@ -36,29 +42,31 @@ export const Chat = (props) => {
         dispatch(chatRoomIDUpdate(data));
     })
 
-    socket.on("message-correctly-sent", data => {
-        console.log("message correctly sent: " + data);
-        dispatch(chatRoomMessagesUpdate(chatMessages.push(data)));
-    })
-
-
-    
+    // socket.on("message-correctly-sent", data => {
+    //     console.log("message correctly sent: " + data);
+    //     dispatch(chatRoomMessagesUpdate(chatMessages.push(data)));
+    // })
 
     return (
         <div>
             <ul className="message-list">                 
-                {chatMessages.map(message => {
-                return (
-                    <li key={message.id}>
-                        <div>
-                            {message.senderId}
-                        </div>
-                        <div>
-                            {message.text}
-                        </div>
-                    </li>
-                )
-            })}
+                {chatMessages.filter(function(item, pos){
+                        return chatMessages.indexOf(item)== pos; 
+                    }).map((message) => {
+                    return (
+                        <li key={message.id}>
+                            <div>
+                                {message.id}
+                            </div>
+                            <div>
+                                {message.authorId}
+                            </div>
+                            <div>
+                                {message.text}
+                            </div>
+                        </li>
+                    )
+                })}
             </ul>
             <form id="form" onSubmit={handleSendMessage}>
                 <input id="input"
