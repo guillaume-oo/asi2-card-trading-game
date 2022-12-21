@@ -1,6 +1,7 @@
 import RoomDao from '../dao/RoomDao.mjs';
 import socketManager from "../../app/SocketManager.mjs";
 import util from 'util'
+import ChatController from '../controllers/ChatController.mjs';
 
 class RoomService {
     constructor({}) {
@@ -26,6 +27,9 @@ class RoomService {
                 socket1.emit("room-created", "room-"+room.waintingUser+"-"+joiningUserID);
                 socket2.emit("room-created", "room-"+room.waintingUser+"-"+joiningUserID);
             }
+            // Au lancement de la game on créér un cht entre les 2 users
+            ChatController.createNewChat(room.waitingUser,joiningUserID);
+
         }
     }
 
