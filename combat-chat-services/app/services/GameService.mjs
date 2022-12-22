@@ -1,6 +1,6 @@
 import GameDAO from '../dao/GameDAO.mjs';
 import socketManager from "../../app/SocketManager.mjs";
-import Card from '../model/Card.mjs';
+import Card from '../models/Card.mjs';
 import util from 'util'
 
 class GameService {
@@ -8,26 +8,31 @@ class GameService {
         console.log(`new GameService`);
     }
 
-
-    createGameRoomRemotly(user1, user2){
+    createGame(user1, user2){
+        console.log('creating a new game');
         var game = GameDAO.createGame(user1, user2);
-        console.log("game created (user1 et 2 id):" + game.user1ID+" "+game.user2ID);
-        this.sendGameToFront(game);           
-    }
-
-    sendGameToFront(game){
-        //todo envoyer les usersId en jeu pour que le front demande tout de eux (cards ect..)
         
         const id1 = game.user1ID;
         const id2 = game.user2ID;
 
+        var msgForUser1 = {
+            gameRoomId: game.id,
+            opponentId: id2,
+            currentPlayingUserId: id1,
+        }
+
+        var msgForUser2 = {
+            gameRoomId: game.id,
+            opponentId: id1,
+            currentPlayingUserId: id1,
+        }
+
         var socket1 = socketManager.getSocketFromUserId(id1); 
-        socket1.emit("game_users_id",id1 , id2);
+        socket1.emit("game-room-created", msgForUser1);
 
         var socket2 = socketManager.getSocketFromUserId(id2); 
-        socket2.emit("game_users_id", id1, id2);
-
-        console.log("socket emit pour : game_users_id");
+        socket2.emit("game-room-created", msgForUser2);
+    
     }
 
     attackRequest(bodyRequest){

@@ -29,4 +29,4 @@ class Card {
 
 }
 
-export default CardDTO;
+export default Card;

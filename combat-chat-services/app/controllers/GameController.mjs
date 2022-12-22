@@ -7,7 +7,7 @@ class GameController {
     }
 
     createGame(user1, user2){
-        GameService.createGameRoomRemotly(user1, user2);
+        GameService.createGame(user1, user2);
     }
 
     attack(request, response){

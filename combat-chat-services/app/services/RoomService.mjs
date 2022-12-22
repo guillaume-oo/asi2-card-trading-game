@@ -2,6 +2,7 @@ import RoomDao from '../dao/RoomDao.mjs';
 import socketManager from "../../app/SocketManager.mjs";
 import util from 'util'
 import ChatController from '../controllers/ChatController.mjs';
+import GameController from '../controllers/GameController.mjs';
 
 class RoomService {
     constructor({}) {
@@ -29,8 +30,7 @@ class RoomService {
             }
             // Au lancement de la game on créér un cht entre les 2 users
             ChatController.createNewChat(room.waitingUser,joiningUserID);
-            ChatController.createNewGame(room.waitingUser,joiningUserID);
-
+            GameController.createGame(room.waitingUser,joiningUserID);
         }
     }
 
