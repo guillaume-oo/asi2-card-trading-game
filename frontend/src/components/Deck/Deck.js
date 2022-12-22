@@ -8,6 +8,8 @@ import { gameSelectedCardUpdate,gameOpponentSelectedCardUpdate } from '../../cor
 export const Deck = (props) => {
     const display_list = getAllCards();
 
+    console.log(props.cards);
+
     function getAllCards() {
         let array_render = [];
         if (props.cards != null) {

@@ -10,24 +10,25 @@ import {SocketContext} from '../../context/socket';
 
 
 export const GameZone = (props) => {
-    const navigate = useNavigate();
     let dispatch = useDispatch();
+
+    const selectedCardSelf = useSelector(state=>state.gameReducer.selectedCardSelf);
+    const selectedCardOpponent = useSelector(state=>state.gameReducer.selectedCardOpponent);
+    const opponentUser = useSelector(state=>state.gameReducer.opponentUser);
+    const user = useSelector(state=>state.userReducer.user);
+    const gameId = useSelector(state=>state.gameReducer.gameRoomId);
+    const currentPlayingUserId = useSelector(state=>state.gameReducer.currentPlayingUserId); // user who's actually playing
 
     const socket = useContext(SocketContext);
 
-    const cardMap = new Map();
+
 
     socket.on("game-room-created", data => {
         console.log("received msg:  game-room-created")
         getUserByID(data.opponentId);
         dispatch(gameRoomIdUpdate(data.gameRoomId));
         dispatch(currentPlayingUserIdUpdate(data.currentPlayingUserId));
-
-        for (var i = 0; i++; user.cardList.length){
-            getUserCards(user.cardList[i]);
-        }
     })
-
 
     function getUserByID(userID){
         fetch('http://localhost:8083/user/'+userID, {
@@ -42,39 +43,10 @@ export const GameZone = (props) => {
         })
         .then(data => {
             dispatch(gameOpponentUpdate(data));
-            getUserCards(data.id);
         })
         .catch(error => console.log(error))
         return true;
     }
-
-    function getUserCards(cardId){
-        fetch('http://localhost:8083/card/'+cardId)
-            .then(response => {
-                cardMap.set(cardId, response.json())
-            })
-            .catch(error => alert(error))
-    }
-
-    const selectedCardSelf = useSelector(state=>state.gameReducer.selectedCardSelf);
-    const selectedCardOpponent = useSelector(state=>state.gameReducer.selectedCardOpponent);
-    const opponentUser = useSelector(state=>state.gameReducer.opponentUser);
-    const user = useSelector(state=>state.userReducer.user);
-    const gameId = useSelector(state=>state.gameReducer.gameRoomId);
-    const currentPlayingUserId = useSelector(state=>state.gameReducer.currentPlayingUserId); // user who's actually playing
-
-
-    const opponentCards= [];
-    if (opponentUser && opponentUser.length>0){
-        opponentCards = opponentUser.cardList.map((id) =>{cardMap.get(id)} )
-    }
-
-    const userCards= [];
-    if (user && user.length>0){
-        userCards = user.cardList.map((id) =>{cardMap.get(id)} )
-    }
-
-
 
     //attackbutton
     function handleAttackButton(){
@@ -107,7 +79,7 @@ export const GameZone = (props) => {
         <div className="ui grid">
             <div className="row">
                 <PlayerBoard user={opponentUser} selectedCard={selectedCardOpponent} 
-                currentPlayingUserId={currentPlayingUserId} userCards={opponentCards}/>
+                currentPlayingUserId={currentPlayingUserId}/>
             </div>
 
             <div className='row'>
@@ -117,7 +89,7 @@ export const GameZone = (props) => {
 
             <div className="row">
                 <PlayerBoard user={user} selectedCard={selectedCardSelf} 
-                currentPlayingUserId={currentPlayingUserId} userCards={userCards} />
+                currentPlayingUserId={currentPlayingUserId} />
             </div>
         </div>
 

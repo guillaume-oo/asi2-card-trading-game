@@ -6,6 +6,7 @@ import { selectedCardUpdate } from '../../core/actions';
 
 export const Card =(props) =>{
 
+    console.log(props.card)
     if (props.card != null){
         return (
             <div class="ui special cards">
