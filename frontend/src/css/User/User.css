@@ -1,0 +1,18 @@
+.userCard{
+    padding: 5px;
+    width: 200px;
+    object-fit: contain;
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+.userCard--fullname{
+    font-size: 14px;
+}
+
+.userCard--bottom{
+    padding: 0 10px;
+    display: block;
+    align-items: center;
+    font-size: 10px;
+}

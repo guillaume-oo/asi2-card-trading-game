@@ -1,5 +1,5 @@
 let initState = {
-    chatRoomId: {},
+    chatRoomId: 0,
     chatMessages: [],
 }
 
@@ -11,9 +11,11 @@ const chatReducer = (state = initState, action) => {
                 chatRoomId: action.obj
             };
         
-        case "SET_CHAT_MESSGAES":
-            return {...state,
-                chatMessages: action.obj};
+        case "SET_CHAT_MESSAGES":
+            return {
+                ...state,
+                chatMessages: [...state.chatMessages, action.obj]
+            };
 
         default:
             return state;

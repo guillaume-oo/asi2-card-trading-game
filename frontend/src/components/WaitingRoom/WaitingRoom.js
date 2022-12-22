@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {SocketContext} from '../../context/socket';
-import { gameAdversaryUpdate, chatRoomIDUpdate } from '../../core/actions';
+import { gameAdversaryUpdate} from '../../core/actions';
 
 export const WaitingRoom = (props) => {
     const navigate = useNavigate();

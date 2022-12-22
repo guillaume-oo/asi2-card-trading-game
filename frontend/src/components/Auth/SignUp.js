@@ -8,13 +8,12 @@ export const SignUp = (props) =>{
     const navigate = useNavigate();
 
     const [currentUser,setCurrentUser]= useState({
-                                        id:"",
-                                        surname:"",
-                                        lastname:"",
+                                        surName:"",
+                                        lastName:"",
                                         img:"",
                                         login:"",
                                         pwd:"",
-                                        money: 5000,
+                                        account: 5000,
                                     });
 
     function processInput(event){
@@ -43,10 +42,10 @@ export const SignUp = (props) =>{
     return (
         <Form>
             <Form.Field>
-                <Form.Input label="Surname" placeholder="john" onChange={processInput}  name="surname" value={currentUser.surname}/>
+                <Form.Input label="Surname" placeholder="john" onChange={processInput}  name="surName" value={currentUser.surname}/>
             </Form.Field>
             <Form.Field>
-                <Form.Input label="Lastname" placeholder="doe" onChange={processInput}  name="lastname" value={currentUser.lastname}/>
+                <Form.Input label="Lastname" placeholder="doe" onChange={processInput}  name="lastName" value={currentUser.lastname}/>
             </Form.Field>
             <Form.Field>
                 <Form.Input label="Login" placeholder="Login" onChange={processInput}  name="login" value={currentUser.login}/>

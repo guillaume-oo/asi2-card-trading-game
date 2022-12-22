@@ -1,7 +1,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 20px 25px;
     height: 80px;
     position: absolute;
@@ -11,18 +11,16 @@
 
 .navbar--left{
     display: flex;
-}
-
-.navbar--home-button{
-    margin-right: 20px;
-}
-
-.navbar--middle{
-    
+    position: absolute;
+    top: 25px;
+    left: 40px;
 }
 
 .navbar--right{
-    
+    display: flex;
+    position: absolute;
+    top: 25px;
+    right: 40px;
 }
   
   

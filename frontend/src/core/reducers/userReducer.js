@@ -1,6 +1,6 @@
 let initState = {
-    user: {
-    }
+    user: {},
+    defaultUsers: {}
 }
 
 const userReducer = (state = initState, action) => {
@@ -9,6 +9,12 @@ const userReducer = (state = initState, action) => {
             return {
                 ...state,
                 user: action.obj
+            };
+
+        case "SET_DEFAULT_USERS":
+            return {
+                ...state,
+                defaultUsers: action.obj
             };
 
         default:
