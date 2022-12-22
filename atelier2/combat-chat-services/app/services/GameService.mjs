@@ -11,8 +11,8 @@ class GameService {
 
     createGameRoomRemotly(user1, user2){
         var game = GameDAO.createGame(user1, user2);
-        console.log("game created (user1 id):" + game.user1ID);
-        this.sendGameToFront(game);           //-------------------faire quand on saura pour j'ai undefined en user1------------------
+        console.log("game created (user1 et 2 id):" + game.user1ID+" "+game.user2ID);
+        this.sendGameToFront(game);           
     }
 
     sendGameToFront(game){
@@ -22,12 +22,12 @@ class GameService {
         const id2 = game.user2ID;
 
         var socket1 = socketManager.getSocketFromUserId(id1); 
-        //socket1.emit("game_users_id", id1, id2);
-        socket1.emit("game_users_id", "coucou", "coucou2");
+        socket1.emit("game_users_id",id1 , id2);
 
-        var socket2 = socketManager.getSocketFromUserId(game.user1ID); 
-        //socket2.emit("game_users_id", id1, id2);
-        socket2.emit("game_users_id", "coucou", "coucou2");
+        var socket2 = socketManager.getSocketFromUserId(id2); 
+        socket2.emit("game_users_id", id1, id2);
+
+        console.log("socket emit pour : game_users_id");
     }
 
     attackRequest(bodyRequest){

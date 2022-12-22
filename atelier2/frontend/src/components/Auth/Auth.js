@@ -65,7 +65,7 @@ export const Auth = (props) =>{
         })
         .then(data => {
             console.log("Fetched user: "+ JSON.stringify(data));
-            dispatch(userUpdate(data));
+            dispatch(userUpdate(data)); 
         })
         .catch(error => console.log(error))
         return true;

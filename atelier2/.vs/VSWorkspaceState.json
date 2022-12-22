@@ -4,13 +4,13 @@
     "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\components",
-    "\\frontend\\src\\components\\Cards",
+    "\\frontend\\src\\components\\Auth",
     "\\frontend\\src\\components\\GameZone",
     "\\frontend\\src\\components\\PlayerBoard",
     "\\frontend\\src\\core",
     "\\frontend\\src\\core\\actions",
     "\\frontend\\src\\core\\reducers"
   ],
-  "SelectedNode": "\\frontend\\src\\components\\GameZone\\GameZone.js",
+  "SelectedNode": "\\frontend\\src\\core\\reducers\\gameRoom.js",
   "PreviewInSolutionExplorer": false
 }

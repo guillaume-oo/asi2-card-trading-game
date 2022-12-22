@@ -29,7 +29,6 @@ class RoomService {
                 
             }
             //to create a game
-            console.log("user1 send :" + room.waitingUser);    //-------ne connait pas !!!!!!!!!!!!!!!!!!!!!!!!! undefined
             gameController.createGameRoomRemotly(room.waitingUser, joiningUserID);
         }
     }

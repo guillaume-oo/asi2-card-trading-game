@@ -1,7 +1,7 @@
 let initState = {
     user1: {
     },
-    user2:{
+    user2: {
     },
     selected_card_u1 : -1,
     selected_card_u2 : -1,
