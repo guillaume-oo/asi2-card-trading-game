@@ -36,7 +36,7 @@ export const gameSelectedCardUpdate = (obj)=>{
     return { type: 'SET_SELECTED_CARD_ADVERSARY_USER', obj:obj}
 }
 export const gameOpponentUpdate = (obj)=>{
-    return { type: 'SET_ADVERSARY_USER', obj:obj}
+    return { type: 'SET_OPPONENT_USER', obj:obj}
 }
 export const gameRoomIdUpdate = (obj)=>{
     return { type: 'SET_GAME_ROOM_ID', obj:obj}

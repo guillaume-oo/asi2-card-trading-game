@@ -1,5 +1,6 @@
 let initState = {
-    opponentUser: {},
+    opponentUser: {
+    },
     selectedCardSelf : -1,
     selectedCardOpponent : -1,
     currentPlayingUserId: -1,
