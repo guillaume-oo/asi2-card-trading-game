@@ -29,6 +29,7 @@ class RoomService {
             }
             // Au lancement de la game on créér un cht entre les 2 users
             ChatController.createNewChat(room.waitingUser,joiningUserID);
+            ChatController.createNewGame(room.waitingUser,joiningUserID);
 
         }
     }
