@@ -1,38 +1,81 @@
 import RoomDao from '../dao/RoomDao.mjs';
 import socketManager from "../../app/SocketManager.mjs";
+import util from 'util'
+import ChatController from '../controllers/ChatController.mjs';
 
 class RoomService {
-    //liste des ID user
-    listUserWaiting = new Array();
-    listRoom = new Array();
-
     constructor({}) {
         console.log(`new RoomService`);
     }
 
-    userWantToPlay(userID){
-        this.listUserWaiting.push(userID);
+    userWantToPlay(joiningUserID, reward){
+        var socket = socketManager.getSocketFromUserId(joiningUserID);
+        socket.emit("user-put-in-queue");
 
-        socketManager.getAll().map( socket => {
-            console.log(socket.id);
-            socket.emit("You are in queue");
-        })
+        var room = this.findRoom(reward); 
+        console.log('room trouvé :' + room)
+        if (!room){
+            var room = RoomDao.createRoom(joiningUserID, reward);
+            console.log('created room: ' +room + " with reward: " + room.getReward())
+            return;
+        }
+        else {
+            var socket1 = socketManager.getSocketFromUserId(room.waitingUser);
+            var socket2 = socketManager.getSocketFromUserId(joiningUserID);
 
-        if (this.listUserWaiting.length == 2){
-            var id1 = this.listUserWaiting[0];
-            var id2 = this.listUserWaiting[1];
-            this.listUserWaiting = new Array();
-            this.createRoom(id1,id2);
+            if (this.createChatRoomRemotly(room.waintingUser,joiningUserID) && this.createGameRoomRemotly(room.waintingUser,joiningUserID)){
+                socket1.emit("room-created", "room-"+room.waitingUser+"-"+joiningUserID);
+                socket2.emit("room-created", "room-"+room.waitingUser+"-"+joiningUserID);
+            }
+            // Au lancement de la game on créér un cht entre les 2 users
+            ChatController.createNewChat(room.waitingUser,joiningUserID);
+
         }
     }
 
-    createRoom(ID1,ID2){
-        //TODO notify les 2 users
-        //TODO creer un chat
-        //TODO creer une game
+    userExitsRoom(userID){
+        console.log(userID);
+        socket = socketManager.getSocketFromUserId(userID);
+        socket.emit("user-removed-from-queue");
+    }
 
-        socketManager.getAll().map( socket => {socket.emit("Partner found") })
-        return RoomDao.createRoom(ID1, ID2);
+    findRoom(reward){
+        console.log(reward);
+
+        console.log(util.inspect(RoomDao.getAllRooms(), {depth: null}))
+
+        var room = RoomDao.getAllRooms().find(room => Number(room.reward) == Number(reward));
+        return room;
+    }
+
+    createChatRoomRemotly(ID1, ID2){
+        return true
+        // var request = require('request');
+
+        // request.post(
+        //     'http:/localhost:9999/room',
+        //     { json: { userA: ID1, userB: ID2 } },
+        //     function (error, response, body) {
+        //         if (!error && response.statusCode == 200) {
+        //             return true
+        //         }
+        //     }
+        // );
+    }
+
+    createGameRoomRemotly(ID1, ID2){
+        // var request = require('request');
+
+        // request.post(
+        //     'http:/localhost:9999/room',
+        //     { json: { userA: ID1, userB: ID2 } },
+        //     function (error, response, body) {
+        //         if (!error && response.statusCode == 200) {
+        //             return true
+        //         }
+        //     }
+        // );
+        return true
     }
 
     getRoom(roomID){

@@ -36,11 +36,8 @@ io.on("connection", function (socket) {
     SocketManager.push(socket);
 
     socket.on("disconnect", () => {
-        console.log(`Socket ${socket.id} Disconnected ...`);
-        
+        console.log(`Socket ${socket.id} Disconnected ...`);  
         SocketManager.delete(socket)
-
-        console.log(`Sockets connected:  ${SocketManager.getAll().length}`);
     })
 });
 
@@ -51,6 +48,14 @@ app.use(bodyParser.json({}));
 app.use(ChatRouter);
 app.use(GameRouter);
 app.use(RoomRouter);
+app.post("/user", (req, res, next) => {
+    console.log("hello")
+    console.log(req.body)
+    SocketManager.addUser(req.body.socketID, req.body.userID)
+    res.status(200).send({
+      success: true,
+    });
+});
 
 app.use(function(req, res){
     console.warn(`${req.path} 404`);

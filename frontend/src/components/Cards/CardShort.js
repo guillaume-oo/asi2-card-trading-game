@@ -4,26 +4,19 @@ import { Description } from './containers/Description';
 import { selectedCardUpdate } from '../../core/actions';
 import { useSelector, useDispatch } from "react-redux"
 
-import { updateselectedcard1,updateSelectedCard2 } from '../../core/actions';
+import { gameSelectedCardUpdate,gameAdversarySelectedCardUpdate } from '../../core/actions';
 
 export const CardShort = (props) => {
-    // const dispatch = useDispatch();
 
-    // function handleOnCardSelected(card) {
-    //     dispatch(selectedCardUpdate(card));
-    // }
-
-    // const user = useSelector(state => state.myUserReducer.user);
-    // const UserId = user.id;
     const dispatch=useDispatch();
 
     function handleOnCardSelected(card){
         console.log("handleOnCardSelected card: "+ card)
         if(props.isCurrentUser){
-            dispatch(updateselectedcard1(card));
+            dispatch(gameSelectedCardUpdate(card));
         }
         if(!props.isCurrentUser){
-            dispatch(updateSelectedCard2(card));
+            dispatch(gameAdversarySelectedCardUpdate(card));
         }
     }
 

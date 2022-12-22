@@ -6,9 +6,10 @@ const BASE_PATH = '/chat';
 const ChatRouter = Router();
 export default ChatRouter;
 
+/*
 ChatRouter.route(BASE_PATH)
     .get(ChatController.getChats)
-    .post(ChatController.createChat);
+    //.post(ChatController.createChat);
 
 ChatRouter.route(`${BASE_PATH}/:chatId`)
     .get(ChatController.getChat)
@@ -18,3 +19,10 @@ ChatRouter.route(`${BASE_PATH}/:chatId`)
 
 ChatRouter.route(`${BASE_PATH}/:chatId/:messageId`)
     .get(ChatController.getMessage);
+*/
+
+// Depuis le chat Id on va informer les users de ce chat du nouveau message
+ChatRouter.route(`${BASE_PATH}/message/:chatId/:userId`) 
+    .post(ChatController.newMessage);
+    
+

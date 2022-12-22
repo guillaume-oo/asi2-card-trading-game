@@ -1,20 +1,22 @@
 import React from 'react';
-import { useSelector } from "react-redux"
 
-export const User = ()=>{
-    const user = useSelector(state=>state.myUserReducer.user)
-    console.log("saved user: " + JSON.stringify(user));
+export const User = (props)=>{
+    const user = props.user;
 
-    if (user.login === undefined){
+    console.log(user);
+
+    if (user != undefined){
         return ( 
-            <>
-                <h2> no user set </h2>        
-            </>
+            <div className="userCard">
+                <div className="userCard--top">
+                    <div className="userCard--fullname">  {user.surName + " " + user.lastName}</div>
+                </div>
+                <div className="userCard--bottom">
+                    <div className="userCard--pseudo"> aka.: {user.login}</div>
+                    <div className="userCard--money"> User Money : {user.account} </div>
+                </div>
+            </div>
         )
     }
-    return ( <>
-        <h2> UserName : {user.login}</h2>
-        <h2> User Money : {user.account} </h2>
-        {/* <h2> User ID : {user.id} </h2> */}
-    </>)
+
 }

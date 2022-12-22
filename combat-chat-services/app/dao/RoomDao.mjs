@@ -1,34 +1,33 @@
-var listeRoom = [];
+import Room from '../models/Room.mjs';
 
 class RoomDao {
-    constructor({}) {
+    constructor() {
+        this.listeRoom = new Array();
         console.log(`new RoomDAO`);
     }
 
-    getAllRoom() {
-        return listeRoom;
+    getAllRooms() {
+        return this.listeRoom;
     }
 
-    getRoom(roomId) {
-        return listeRoom.filter(
-            r => r.id === Number(roomId)
+    getRoom(roomID) {
+        return this.listeRoom.filter(
+            r => r.id === Number(roomID)
         );
     }
 
-    deleteRoom(roomId) {
-        return listeRoom.filter(
-            r => r.id === Number(roomId)
+    deleteRoom(roomID) {
+        return this.listeRoom.filter(
+            r => r.id === Number(roomID)
         ).pop();
     }
 
-    createRoom(user1Id,user2Id) {
-        room.roomId = listeRoom.length+1;
-        room.user1Id = user1Id;
-        room.user2Id = user2Id;
-        listeRoom.push(room);
+    createRoom(userID,reward) {
+        var room = new Room(this.listeRoom.length+1, userID, reward);
+        this.listeRoom.push(room);
         return room;
     }
 
 }
     
-export default new RoomDao({});
+export default new RoomDao();

@@ -3,71 +3,81 @@ import { Form, Header,Button } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { userUpdate } from "../../core/actions"
+import { socket } from "../../context/socket"
 
 export const Auth = (props) =>{
-       const [currentUser,setCurrentUser]= useState({
-                                            // id:"",
-                                            // surname:"",
-                                            // lastname:"",
-                                            // img:"",
-                                            username:"",
-                                            password:"",
-                                            // money:0,
-
-                                        });
-
-    function processInput(event, { valueData }){
-        // A chaque fois qu'on input qqch dans le formulaire on appelle cette fonction
-        // Ici normalement on travaille sur un user donc on le créé vide et on rajoute ses détails
-        const target = event.currentTarget;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        // let currentVal=currentUser;
-        setCurrentUser({...currentUser, [name]: value});
-        // currentVal[name]= value;
-        // props.handleChange(currentVal);
-    };
     const navigate = useNavigate();
     let dispatch = useDispatch();
 
-    function submitOrder(data){
-        props.submitUserHandler(data);
-        console.log("current user : " + JSON.stringify(currentUser) );
+    const [currentUser,setCurrentUser]= useState({
+                                        username:"",
+                                        password:"",
+                                    });
+
+    function processInput(event){
+        const target = event.currentTarget;
+        var name = target.name;
+        var value = target.value;
+
+        setCurrentUser({...currentUser, [name]: value});
+    };
+
+    function loginUser(){
         fetch('http://localhost:8083/auth',{
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              "Access-Control-Allow-Origin": "*"
             },
             body: JSON.stringify(currentUser)
         })
         .then((response) => {
-            if (response.status == 403){throw new Error('Invalid credentials');}
-            else if (response.status == 200) {return response.json()}
+            if (response.status == 403){
+                throw new Error('Invalid credentials');
+            }
+            else if (response.status == 200) {
+                return response.json()
+            }
         })
         .then((data) => {
-            console.log("reponse: "  +JSON.stringify(data));
-            if (getUserByID(data)){
-                navigate('/home')
+            console.log(data)
+            if (getUserByID(data) && sendUserIDToSocket(data)){
+                navigate('/home');
             }else{
                 throw new Error('User not found');
             }
         })
-        .catch(error => alert(error))
+        .catch(error => console.log(error))
     }
 
     function getUserByID(userID){
-        fetch('http://localhost:8083/user/'+userID)
-        .then(response => {
-            console.log("reponse: "+ response)
-            if (response.status == 403){throw new Error('Invalid credentials');}
-            else if (response.status == 200) {return response.json()}
+        fetch('http://localhost:8083/user/'+userID, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
         })
         .then(response => {
-            console.log("Fetched user: "+ JSON.stringify(response));
-            dispatch(userUpdate(response));
-            
+            if (response.status == 200) {return response.json();}
         })
-        .catch(error => alert(error))
+        .then(data => {
+            console.log("Fetched user: "+ JSON.stringify(data));
+            dispatch(userUpdate(data));
+        })
+        .catch(error => console.log(error))
+        return true;
+    }
+
+    function sendUserIDToSocket(userID){
+        fetch('http://localhost:9999/user',  {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify({socketID: socket.id, userID: userID})
+        })
         return true;
     }
     
@@ -82,7 +92,7 @@ export const Auth = (props) =>{
             <Form.Field>
                 <Form.Input type="password" label="Pwd" placeholder="password" onChange={processInput}  name="password" value={currentUser.pwd}/>
             </Form.Field>
-            <Button type='button' onClick={submitOrder}>Login</Button>
+            <Button type='button' onClick={loginUser}>Login</Button>
         </Form>
 
     );

@@ -54,7 +54,7 @@ export const PlayerBoard= (props) =>{
 export const PlayerBoard= (props) =>{
     const navigate = useNavigate();
     const listcards = useSelector(state=>state.cardReducer.cards);
-    const user = useSelector(state=>state.myUserReducer.user);
+    const user = useSelector(state=>state.userReducer.user);
     const UserCards = user.cardList;
     let cardsToPlay = [];
 

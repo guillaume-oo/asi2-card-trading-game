@@ -1,6 +1,16 @@
 export const userUpdate = (obj)=>{
     return { type: 'SET_USER', obj:obj}
 }
+export const defaultUsersUpdate = (obj)=>{
+    return { type: 'SET_DEFAULT_USERS', obj:obj}
+}
+export const chatRoomIDUpdate = (obj)=>{
+    return { type: 'SET_CHAT_ROOM_ID', obj:obj}
+}
+export const chatRoomMessagesUpdate = (obj)=>{
+    console.log(" coucou from actions index")
+    return { type: 'SET_CHAT_MESSAGES', obj:obj}
+}
 export const cardsUpdate = (obj)=>{
     return { type: 'UPDATE_LIST_CARD', obj:obj}
 }
@@ -10,18 +20,12 @@ export const selectedCardUpdate = (obj)=>{
 export const selectedCurrentCardUpdate = (obj)=>{
     return { type: 'UPDATE_CURRENT_SELECTED_CARD', obj:obj}
 }
-export const updateselectedcard1 = (obj)=>{
-    return { type: 'SET_SELECTED_CARD_USER1', obj:obj}
+export const gameAdversarySelectedCardUpdate = (obj)=>{
+    return { type: 'SET_SELECTED_CARD_USER', obj:obj}
 }
-export const updateSelectedCard2 = (obj)=>{
-    return { type: 'SET_SELECTED_CARD_USER2', obj:obj}
+export const gameSelectedCardUpdate = (obj)=>{
+    return { type: 'SET_SELECTED_CARD_ADVERSARY_USER', obj:obj}
 }
-export const updateUser1 = (obj)=>{
-    return { type: 'SET_USER1', obj:obj}
+export const gameAdversaryUpdate = (obj)=>{
+    return { type: 'SET_ADVERSARY_USER', obj:obj}
 }
-export const updateUser2 = (obj)=>{
-    return { type: 'SET_USER2', obj:obj}
-}
-
-
-

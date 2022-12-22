@@ -13,7 +13,7 @@ export const TableCard =(props) =>{
         dispatch(selectedCardUpdate(card));   
     }
 
-    const user = useSelector(state=>state.myUserReducer.user);
+    const user = useSelector(state=>state.userReducer.user);
     const UserId = user.id;
     
 
