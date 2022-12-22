@@ -14,10 +14,8 @@ class RoomService {
         socket.emit("user-put-in-queue");
 
         var room = this.findRoom(reward); 
-        console.log('room trouvé :' + room)
         if (!room){
             var room = RoomDao.createRoom(joiningUserID, reward);
-            console.log('created room: ' +room + " with reward: " + room.getReward())
             return;
         }
         else {
@@ -35,16 +33,11 @@ class RoomService {
     }
 
     userExitsRoom(userID){
-        console.log(userID);
         socket = socketManager.getSocketFromUserId(userID);
         socket.emit("user-removed-from-queue");
     }
 
     findRoom(reward){
-        console.log(reward);
-
-        console.log(util.inspect(RoomDao.getAllRooms(), {depth: null}))
-
         var room = RoomDao.getAllRooms().find(room => Number(room.reward) == Number(reward));
         return room;
     }

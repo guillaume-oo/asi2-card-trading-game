@@ -62,7 +62,6 @@ export const Auth = (props) =>{
             if (response.status == 200) {return response.json();}
         })
         .then(data => {
-            console.log("Fetched user: "+ JSON.stringify(data));
             dispatch(userUpdate(data));
         })
         .catch(error => console.log(error))

@@ -49,8 +49,6 @@ app.use(ChatRouter);
 app.use(GameRouter);
 app.use(RoomRouter);
 app.post("/user", (req, res, next) => {
-    console.log("hello")
-    console.log(req.body)
     SocketManager.addUser(req.body.socketID, req.body.userID)
     res.status(200).send({
       success: true,

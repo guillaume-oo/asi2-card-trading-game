@@ -11,7 +11,6 @@ export const chatRoomIDUpdate = (obj)=>{
     return { type: 'SET_CHAT_ROOM_ID', obj:obj}
 }
 export const chatRoomMessagesUpdate = (obj)=>{
-    console.log(" coucou from actions index")
     return { type: 'SET_CHAT_MESSAGES', obj:obj}
 }
 //USER CARDS

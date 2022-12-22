@@ -7,8 +7,6 @@ import { RightSide } from '../Market/RightSide/RightSide';
 
 export const PlayerBoard= (props) =>{
 
-    console.log("player board" + props.user.surName);
-
     return(
         <div class="ui grid">
             <div className='column'>

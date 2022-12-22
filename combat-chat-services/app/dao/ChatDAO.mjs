@@ -10,9 +10,7 @@ class ChatDAO {
     }
 
     listChat() {
-        // console.log("All chat rooms: " + this.chatRooms.length);
-        console.log("connected users : " +socketManager.getAll().length)
-        return this.chatRooms
+        return this.chatRooms;
     }
 
     getChat(chatId) {

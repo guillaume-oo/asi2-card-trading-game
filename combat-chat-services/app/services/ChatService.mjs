@@ -11,7 +11,6 @@ class ChatService {
     }
 
     listChat() {
-        console.log("connected users : " +socketManager.getAll().length);
         ChatDAO.listChat();
         return chatRooms;
     }
@@ -26,7 +25,6 @@ class ChatService {
     }
 
     createNewChat(user1Id, user2Id){
-        console.log("New chat creer")
         var chat = ChatDAO.createChat(user1Id,user2Id);
         var socket1 = socketManager.getSocketFromUserId(user1Id);
         var socket2 = socketManager.getSocketFromUserId(user2Id);
@@ -38,15 +36,9 @@ class ChatService {
 
     sendMessage(chatId,userId,message){
         var chat = ChatDAO.getChat(chatId);
-        // console.log(util.inspect(chat, {depth: null}))
         var socket1 = socketManager.getSocketFromUserId(chat.userA);
         var socket2 = socketManager.getSocketFromUserId(chat.userB);
         var message = ChatDAO.createMessage(chatId,userId,message);
-
-
-        console.log(util.inspect(message, {depth: null}))
-        // console.log(util.inspect(socket2, {depth: null}))
-        // console.log("chat id user" + chat.getUserA() + chat.getUserB())
 
         socket1.emit("new-message-received", message);
         socket2.emit("new-message-received", message);

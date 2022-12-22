@@ -25,7 +25,6 @@ export const SignUp = (props) =>{
     };
 
     function createUser(data){
-        console.log("current user : " + JSON.stringify(currentUser) );
         fetch('http://localhost:8083/user',{
             method: 'POST',
             headers: {

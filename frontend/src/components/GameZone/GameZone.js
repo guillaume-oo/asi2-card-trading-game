@@ -41,7 +41,6 @@ export const GameZone = (props) => {
             if (response.status == 200) {return response.json();}
         })
         .then(data => {
-            console.log("Fetched opponent user: "+ JSON.stringify(data));
             dispatch(gameOpponentUpdate(data));
             getUserCards(data.id);
         })
@@ -52,7 +51,6 @@ export const GameZone = (props) => {
     function getUserCards(cardId){
         fetch('http://localhost:8083/card/'+cardId)
             .then(response => {
-                console.log("Fetched second user: "+ JSON.stringify(response));
                 cardMap.set(cardId, response.json())
             })
             .catch(error => alert(error))

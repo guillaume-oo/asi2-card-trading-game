@@ -38,7 +38,6 @@ export const Chat = (props) => {
     })
 
     socket.on("chat-room-created", data => {
-        console.log("room creer id: " + data);
         dispatch(chatRoomIDUpdate(data));
     })
 
