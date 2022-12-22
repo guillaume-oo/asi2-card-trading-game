@@ -15,8 +15,8 @@ export const GameZone = (props) => {
 
     const [gameId, setGameId] = useState(0);//unused
 //Current user selected card and other user selected card
-    const selectedcard1 = useSelector(state=>state.gameReducer.selected_card_u1)
-    const selectedcard2 = useSelector(state=>state.gameReducer.selected_card_u2)
+    const selectedcard1 = useSelector(state=>state.gameReducer.selectedCardSelf)
+    const selectedcard2 = useSelector(state=>state.gameReducer.selectedCardOpponent)
    
     
 //----recuperer users via requete / listen socket----

@@ -7,8 +7,8 @@ import { RightSide } from '../Market/RightSide/RightSide';
 export const PlayerBoard= (props) =>{
     // const selectedcard = useSelector(state=>state.cardReducer.selectedCard)
     // useSelector checker si c'est le current user et passer à RightSide
-    let CardSelected1 = useSelector(state=> state.gameReducer.selected_card_u1);
-    let CardSelected2 = useSelector(state => state.gameReducer.selected_card_u2);
+    let CardSelected1 = useSelector(state=> state.gameReducer.selectedCardSelf);
+    let CardSelected2 = useSelector(state => state.gameReducer.selectedCardOpponent);
    
 
     let cardsToPlay = [];

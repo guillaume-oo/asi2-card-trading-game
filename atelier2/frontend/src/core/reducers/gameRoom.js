@@ -3,8 +3,8 @@ let initState = {
     },
     user2: {
     },
-    selected_card_u1 : -1,
-    selected_card_u2 : -1,
+    selectedCardSelf : -1,
+    selectedCardOpponent : -1,
 }
 
 const gameReducer = (state = initState, action) => {
@@ -12,12 +12,12 @@ const gameReducer = (state = initState, action) => {
         case "SET_SELECTED_CARD_USER":
             return {
                 ...state,
-                selected_card_u1: action.obj
+                selectedCardSelf: action.obj
             };
         case "SET_SELECTED_CARD_ADVERSARY_USER":
             return {
                     ...state,
-                    selected_card_u2: action.obj
+                    selectedCardOpponent: action.obj
             };
         case "SET_ADVERSARY_USER":
             return {

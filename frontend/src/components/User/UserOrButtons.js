@@ -9,7 +9,7 @@ import "../../css/NavBar/NavBar.css"
 
 export const UserOrButtons= (props) =>{
     const navigate = useNavigate();
-    const user = useSelector(state=>state.userReducer.user)
+    const user = useSelector(state=>state.userReducer.user);
 
     function handleClickCreateUser() {
         navigate('/sign-up')

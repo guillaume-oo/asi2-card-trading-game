@@ -8,46 +8,39 @@ import { useSelector } from 'react-redux';
 
 export const GameZone = (props) => {
     const navigate = useNavigate();
-    const [gameId, setGameId] = useState(0);
-    //Current user selected card and other user selected card
-    const selectedcard1 = useSelector(state=>state.gameReducer.selected_card_u1)
-    const selectedcard2 = useSelector(state=>state.gameReducer.selected_card_u2)
 
-    //----recuperer via requete / listen socket----
-    const [user2, setUser2] = useState({ userid: 2, card_list: [{ name: "gg" }], action_pts: 1000, isCurrentUser:false });
-    const [user1, setuser1] = useState({ userid: 1, card_list: [{ name: "jj" }], action_pts: 1000, isCurrentUser:true });
+    const selectedCardSelf = useSelector(state=>state.gameReducer.selectedCardSelf);
+    const selectedCardOpponent = useSelector(state=>state.gameReducer.selectedCardOpponent);
+    const opponentUser = useSelector(state=>state.gameReducer.opponentUser);
+    const user = useSelector(state=>state.userReducer.user);
+    const gameId = useSelector(state=>state.gameReducer.gameId);
+    const currentUserId = useSelector(state=>state.gameReducer.gameId); // user who's actually playing
 
 
     //User1 et User2 sont les joueurs, User est celui qui s'est login
 
     //attackbutton
     function handleAttackButton(){
-
-        if(user1.isCurrentUser){
-        let attaquantId = user1.userid;
-        let victimeId = user2.useridid;
-        let attaquantCard = selectedcard1;
-        let victimeCard = selectedcard2;
-
-        if (user1.isCurrentUser){     //donc user1 est l'attaquant
-            attaquantId = user1.userid;
-            victimeId = user2.userid;
-            attaquantCard = selectedcard1;
-            victimeCard = selectedcard2;
-            //todo requete
+        let attaquantId;
+        let victimeId;
+        let attaquantCard;
+        let victimeCard;
+        if(user.id == currentUserId){
+            attaquantId = user.id;
+            victimeId = opponentUser.id;
+            attaquantCard = selectedCardSelf;
+            victimeCard = selectedCardOpponent;
         }
-        else{                         //donc user2 est l'attaquant
-            attaquantId = user2.userid;
-            victimeId = user1.userid;
-            attaquantCard = selectedcard2;
-            victimeCard = selectedcard1;
-            //todo requete
+        else{
+            attaquantId = opponentUser.id;
+            victimeId = user.id;
+            attaquantCard = selectedCardOpponent;
+            victimeCard = selectedCardSelf;
         }
         console.log("attaque faite de : "+attaquantId + " avec la carte : "+attaquantCard);
-        }
         
-         //toto recup data et envoyer requete au back 
     }
+
 
     //EndTurn button
     function handleEndTurnButton(){
@@ -57,7 +50,7 @@ export const GameZone = (props) => {
     return (
         <div className="ui grid">
             <div className="row">
-                <PlayerBoard user={user2} selectedCard={selectedcard2} />
+                <PlayerBoard user={user2} selectedCard={selectedCardOpponent} />
             </div>
 
             <div className='row'>
@@ -66,7 +59,7 @@ export const GameZone = (props) => {
             </div>
 
             <div className="row">
-                <PlayerBoard user={user1} selectedCard={selectedcard1} />
+                <PlayerBoard user={user1} selectedCard={selectedCardSelf} />
             </div>
         </div>
 

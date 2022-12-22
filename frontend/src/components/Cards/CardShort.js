@@ -4,7 +4,7 @@ import { Description } from './containers/Description';
 import { selectedCardUpdate } from '../../core/actions';
 import { useSelector, useDispatch } from "react-redux"
 
-import { gameSelectedCardUpdate,gameAdversarySelectedCardUpdate } from '../../core/actions';
+import { gameSelectedCardUpdate,gameOpponentSelectedCardUpdate } from '../../core/actions';
 
 export const CardShort = (props) => {
 
@@ -16,7 +16,7 @@ export const CardShort = (props) => {
             dispatch(gameSelectedCardUpdate(card));
         }
         if(!props.isCurrentUser){
-            dispatch(gameAdversarySelectedCardUpdate(card));
+            dispatch(gameOpponentSelectedCardUpdate(card));
         }
     }
 

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {SocketContext} from '../../context/socket';
-import { gameAdversaryUpdate, chatRoomIDUpdate } from '../../core/actions';
+import { gameOpponentUpdate, chatRoomIDUpdate } from '../../core/actions';
 
 export const WaitingRoom = (props) => {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ export const WaitingRoom = (props) => {
         fetch('http://localhost:8083/user/'+userID)
             .then(response => {
                 console.log("Fetched second user: "+ JSON.stringify(response));
-                dispatch(gameAdversaryUpdate(response));
+                dispatch(gameOpponentUpdate(response));
             })
             .catch(error => alert(error))
         return true;
