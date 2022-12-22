@@ -7,19 +7,12 @@ import { useSelector, useDispatch } from "react-redux"
 import { gameSelectedCardUpdate,gameOpponentSelectedCardUpdate } from '../../core/actions';
 
 export const CardShort = (props) => {
-
     const dispatch=useDispatch();
 
     function handleOnCardSelected(card){
-        console.log("handleOnCardSelected card: "+ card)
-        if(props.isCurrentUser){
-            dispatch(gameSelectedCardUpdate(card));
-        }
-        if(!props.isCurrentUser){
-            dispatch(gameOpponentSelectedCardUpdate(card));
-        }
+        dispatch(gameSelectedCardUpdate(card));
+        // do post request to alert other user
     }
-
 
     if (props.card != null) {
         return (
