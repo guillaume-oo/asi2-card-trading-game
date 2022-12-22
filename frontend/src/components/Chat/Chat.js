@@ -42,11 +42,6 @@ export const Chat = (props) => {
         dispatch(chatRoomIDUpdate(data));
     })
 
-    // socket.on("message-correctly-sent", data => {
-    //     console.log("message correctly sent: " + data);
-    //     dispatch(chatRoomMessagesUpdate(chatMessages.push(data)));
-    // })
-
     return (
         <div>
             <ul className="message-list">                 

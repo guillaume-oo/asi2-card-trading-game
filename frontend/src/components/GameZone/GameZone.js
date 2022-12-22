@@ -3,18 +3,39 @@ import { useNavigate } from "react-router-dom";
 import { Deck } from '../Deck/Deck';
 import { UserBoard } from '../UserBoard/UserBoard';
 import { PlayerBoard } from '../PlayerBoard/PlayerBoard';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
+import { gameOpponentUpdate,gameRoomIdUpdate, currentPlayingUserIdUpdate, 
+    gameOpponentSelectedCardUpdate, gameSelectedCardUpdate } from '../../core/actions';
+import {SocketContext} from '../../context/socket';
 
 
 export const GameZone = (props) => {
     const navigate = useNavigate();
+    let dispatch = useDispatch();
+
+    const socket = useContext(SocketContext);
+
+    socket.on("game-room-created", data => {
+        getUserByID(data.opponentId);
+        dispatch(gameRoomIdUpdate(data.gameRoomId));
+        dispatch(currentPlayingUserIdUpdate(data.currentPlayingUserId));
+    })
+
+    function getUserByID(userID){
+        fetch('http://localhost:8083/user/'+userID)
+            .then(response => {
+                console.log("Fetched second user: "+ JSON.stringify(response));
+                dispatch(gameOpponentUpdate(response));
+            })
+            .catch(error => alert(error))
+    }
 
     const selectedCardSelf = useSelector(state=>state.gameReducer.selectedCardSelf);
     const selectedCardOpponent = useSelector(state=>state.gameReducer.selectedCardOpponent);
     const opponentUser = useSelector(state=>state.gameReducer.opponentUser);
     const user = useSelector(state=>state.userReducer.user);
-    const gameId = useSelector(state=>state.gameReducer.gameId);
-    const currentUserId = useSelector(state=>state.gameReducer.gameId); // user who's actually playing
+    const gameId = useSelector(state=>state.gameReducer.gameRoomId);
+    const currentUserId = useSelector(state=>state.gameReducer.currentPlayingUserId); // user who's actually playing
 
 
     //User1 et User2 sont les joueurs, User est celui qui s'est login
@@ -38,7 +59,6 @@ export const GameZone = (props) => {
             victimeCard = selectedCardSelf;
         }
         console.log("attaque faite de : "+attaquantId + " avec la carte : "+attaquantCard);
-        
     }
 
 

@@ -1,10 +1,9 @@
 let initState = {
-    user1: {
-    },
-    user2: {
-    },
+    opponentUser: {},
     selectedCardSelf : -1,
     selectedCardOpponent : -1,
+    currentPlayingUserId: -1,
+    gameRoomId: -1,
 }
 
 const gameReducer = (state = initState, action) => {
@@ -14,25 +13,25 @@ const gameReducer = (state = initState, action) => {
                 ...state,
                 selectedCardSelf: action.obj
             };
-        case "SET_SELECTED_CARD_ADVERSARY_USER":
-            return {
-                    ...state,
-                    selectedCardOpponent: action.obj
-            };
-        case "SET_ADVERSARY_USER":
-            return {
-                    ...state,
-                    user1: action.obj
-            };
-        case "SET_REFRESH_USER1":
+        case "SET_SELECTED_CARD_OPPONENT_USER":
             return {
                 ...state,
-                user1: action.obj
+                selectedCardOpponent: action.obj
             };
-        case "SET_REFRESH_USER2":
+        case "SET_OPPONENT_USER":
             return {
                 ...state,
-                user2: action.obj
+                opponentUser: action.obj
+            };
+        case "SET_GAME_ROOM_ID":
+            return {
+                ...state,
+                gameRoomId: action.obj
+            };
+        case "SET_CURRENTLY_PLAYING_USER_ID":
+            return {
+                ...state,
+                currentlyPlayingUserId: action.obj
             };
 
         default:

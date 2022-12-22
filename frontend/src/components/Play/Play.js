@@ -16,8 +16,5 @@ export const Play = (props) => {
                     <GameZone />
                 </div>
             </div>
-
-
-
     );
 }

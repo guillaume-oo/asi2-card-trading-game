@@ -24,8 +24,8 @@ class RoomService {
             var socket2 = socketManager.getSocketFromUserId(joiningUserID);
 
             if (this.createChatRoomRemotly(room.waintingUser,joiningUserID) && this.createGameRoomRemotly(room.waintingUser,joiningUserID)){
-                socket1.emit("room-created", "room-"+room.waitingUser+"-"+joiningUserID);
-                socket2.emit("room-created", "room-"+room.waitingUser+"-"+joiningUserID);
+                socket1.emit("matchmaking", "room-"+room.waitingUser+"-"+joiningUserID);
+                socket2.emit("matchmaking", "room-"+room.waitingUser+"-"+joiningUserID);
             }
             // Au lancement de la game on créér un cht entre les 2 users
             ChatController.createNewChat(room.waitingUser,joiningUserID);

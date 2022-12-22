@@ -1,9 +1,0 @@
-target
-.metadata/
-.settings/
-.project
-.code
-.classpath
-*.iml
-node_modules
-package-lock.json
