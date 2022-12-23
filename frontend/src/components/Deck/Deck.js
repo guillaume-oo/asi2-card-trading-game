@@ -1,28 +1,19 @@
 import React, { Component, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { CardShort } from '../Cards/CardShort';
-import { useSelector, useDispatch } from "react-redux"
-import { Card } from 'semantic-ui-react';
-import { gameSelectedCardUpdate,gameOpponentSelectedCardUpdate } from '../../core/actions';
+import { ButtonCard } from '../Cards/ButtonCard';
 
 export const Deck = (props) => {
     const display_list = getAllCards();
-
-    console.log(props.cards);
 
     function getAllCards() {
         let array_render = [];
         if (props.cards != null) {
             for (var i=0; i< 3; i++){
                 array_render.push(
-                    <div className='eight wide column'>
-                    <div className='ui segment'>
-                    <CardShort
-                        key={i}
+
+                    <ButtonCard
                         card={props.cards[i]}
+                        isCurrentUser = {props.isCurrentUser}
                     />
-                    </div>
-                    </div>
                 );
             }
 

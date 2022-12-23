@@ -1,4 +1,15 @@
 .imgCard{
     width: 100%;
-    object-fit: contain;
+    height: 100px;
+    object-fit: center;
 }
+
+.small-card{
+    width: 150px !important;
+}
+
+.ui.cards > .small-card > .content {
+    padding: .5em .5em;
+    font-size: .7em;
+}
+

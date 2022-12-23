@@ -1,9 +1,9 @@
 let initState = {
     opponentUser: {
     },
-    selectedCardSelf : -1,
-    selectedCardOpponent : -1,
-    currentPlayingUserId: -1,
+    selectedCardSelf : {},
+    selectedCardOpponent : {},
+    currentlyPlayingUserId: -1,
     gameRoomId: -1,
 }
 

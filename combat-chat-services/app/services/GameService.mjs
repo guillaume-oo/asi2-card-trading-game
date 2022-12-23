@@ -18,13 +18,13 @@ class GameService {
         var msgForUser1 = {
             gameRoomId: game.id,
             opponentId: id2,
-            currentPlayingUserId: id1,
+            currentlyPlayingUserId: id1,
         }
 
         var msgForUser2 = {
             gameRoomId: game.id,
             opponentId: id1,
-            currentPlayingUserId: id1,
+            currentlyPlayingUserId: id1,
         }
 
         var socket1 = socketManager.getSocketFromUserId(id1); 
