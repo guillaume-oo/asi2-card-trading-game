@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cardReducer from './cardReducer';
 import userReducer from './userReducer';
-import gameReducer from './gameRoom';
+import gameReducer from './gameReducer';
 import chatReducer from './chatReducer';
 
 export default configureStore({

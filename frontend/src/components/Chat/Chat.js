@@ -38,14 +38,8 @@ export const Chat = (props) => {
     })
 
     socket.on("chat-room-created", data => {
-        console.log("room creer id: " + data);
         dispatch(chatRoomIDUpdate(data));
     })
-
-    // socket.on("message-correctly-sent", data => {
-    //     console.log("message correctly sent: " + data);
-    //     dispatch(chatRoomMessagesUpdate(chatMessages.push(data)));
-    // })
 
     return (
         <div>

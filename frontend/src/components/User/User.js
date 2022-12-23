@@ -3,8 +3,6 @@ import React from 'react';
 export const User = (props)=>{
     const user = props.user;
 
-    console.log(user);
-
     if (user != undefined){
         return ( 
             <div className="userCard">

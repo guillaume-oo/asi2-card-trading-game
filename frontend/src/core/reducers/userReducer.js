@@ -1,5 +1,7 @@
 let initState = {
-    user: {},
+    user: {
+
+    },
     defaultUsers: {}
 }
 
