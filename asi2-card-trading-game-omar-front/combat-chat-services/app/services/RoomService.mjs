@@ -1,0 +1,89 @@
+import RoomDao from '../dao/RoomDao.mjs';
+import socketManager from "../../app/SocketManager.mjs";
+import util from 'util'
+import ChatController from '../controllers/ChatController.mjs';
+import GameController from '../controllers/GameController.mjs';
+
+class RoomService {
+    constructor({}) {
+        console.log(`new RoomService`);
+    }
+
+    userWantToPlay(joiningUserID, reward){
+        var socket = socketManager.getSocketFromUserId(joiningUserID);
+        socket.emit("user-put-in-queue");
+
+        var room = this.findRoom(reward); 
+        if (!room){
+            var room = RoomDao.createRoom(joiningUserID, reward);
+            return;
+        }
+        else {
+            var socket1 = socketManager.getSocketFromUserId(room.waitingUser);
+            var socket2 = socketManager.getSocketFromUserId(joiningUserID);
+
+            if (this.createChatRoomRemotly(room.waintingUser,joiningUserID) && this.createGameRoomRemotly(room.waintingUser,joiningUserID)){
+                socket1.emit("matchmaking", "room-"+room.waitingUser+"-"+joiningUserID);
+                socket2.emit("matchmaking", "room-"+room.waitingUser+"-"+joiningUserID);
+            }
+            // Au lancement de la game on créér un cht entre les 2 users
+            ChatController.createNewChat(room.waitingUser,joiningUserID);
+            GameController.createGame(room.waitingUser,joiningUserID);
+        }
+    }
+
+    userExitsRoom(userID){
+        socket = socketManager.getSocketFromUserId(userID);
+        socket.emit("user-removed-from-queue");
+    }
+
+    findRoom(reward){
+        var room = RoomDao.getAllRooms().find(room => Number(room.reward) == Number(reward));
+        return room;
+    }
+
+    createChatRoomRemotly(ID1, ID2){
+        return true
+        // var request = require('request');
+
+        // request.post(
+        //     'http:/localhost:9999/room',
+        //     { json: { userA: ID1, userB: ID2 } },
+        //     function (error, response, body) {
+        //         if (!error && response.statusCode == 200) {
+        //             return true
+        //         }
+        //     }
+        // );
+    }
+
+    createGameRoomRemotly(ID1, ID2){
+        // var request = require('request');
+
+        // request.post(
+        //     'http:/localhost:9999/room',
+        //     { json: { userA: ID1, userB: ID2 } },
+        //     function (error, response, body) {
+        //         if (!error && response.statusCode == 200) {
+        //             return true
+        //         }
+        //     }
+        // );
+        return true
+    }
+
+    getRoom(roomID){
+        return RoomDao.getRoom(roomID);
+    }
+
+    getAllRooms() {
+        return RoomDao.getAllRoom();
+    }
+    
+    deleteRoom(roomID){
+        return RoomDao.deleteRoom(roomID);
+    }
+
+}
+
+export default new RoomService({});
