@@ -10,8 +10,8 @@ export const User = (props)=>{
                     <div className="userCard--fullname">  {user.surName + " " + user.lastName}</div>
                 </div>
                 <div className="userCard--bottom">
-                    <div className="userCard--pseudo"> aka.: {user.login}</div>
-                    <div className="userCard--money"> User Money : {user.account} </div>
+                    <div className="userCard--pseudo"> aka : {user.login}</div>
+                    <div className="userCard--money"> Money : {user.account} </div>
                 </div>
             </div>
         )

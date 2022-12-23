@@ -24,9 +24,18 @@ export const PlayerBoard= (props) =>{
 
 
     return(
-        <div class="ui grid">
-         <div className='twelve wide column'>
-               <h4 >{props.user.login}</h4>
+        <div class="ui grid Board">
+            <div className='centered row'>
+                <div class="eight wide column">
+                    <User user={props.user}/>
+                </div>
+                <div>
+                    Pts de vie: 100
+                    <br></br>
+                    Pts d'actions: 10
+                </div>
+            </div>
+            <div className='twelve wide column'>
                <Deck isCurrentUser={props.user.id == self.id } cards={userCards}/>
             </div>
             <div className='four wide column'>

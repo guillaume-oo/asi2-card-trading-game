@@ -27,7 +27,7 @@ export const NavBar= (props) =>{
     }
 
     return(
-        <nav className='navbar'>
+        <nav className='navbar' class='row'>
             <div className='navbar--left'>
                 <Button type='button' onClick={handleClickHome} className={routeName=='Home' ? 'navbar--home-button  hidden' : 'navbar--home-button'}>Home</Button>
             </div>

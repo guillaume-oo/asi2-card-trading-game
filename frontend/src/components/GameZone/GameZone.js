@@ -80,20 +80,21 @@ export const GameZone = (props) => {
     return (
         <div className="ui grid">
             <div className="row">
-                <PlayerBoard user={opponentUser} selectedCard={selectedCardOpponent} 
-                currentlyPlayingUserId={currentlyPlayingUserId}/>
+                <PlayerBoard user={user} selectedCard={selectedCardSelf} 
+                currentlyPlayingUserId={currentlyPlayingUserId} />
             </div>
 
-            <div className='row '>
+            <div className=' centered row '>
                 <div className='right'>
+                    <h5>{currentlyPlayingUserId==user.id?"Your Turn to Attack !":"Opponenets turn, please wait !"}</h5>
                     <Button type='button' onClick={() => handleEndTurnButton()}> End turn </Button>
                     <Button type='button' onClick={() => handleAttackButton()}> Attack </Button>
                 </div>
             </div>
 
             <div className="row">
-                <PlayerBoard user={user} selectedCard={selectedCardSelf} 
-                currentlyPlayingUserId={currentlyPlayingUserId} />
+                <PlayerBoard user={opponentUser} selectedCard={selectedCardOpponent} 
+                currentlyPlayingUserId={currentlyPlayingUserId}/>
             </div>
         </div>
 

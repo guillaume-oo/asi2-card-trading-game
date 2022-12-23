@@ -23,6 +23,8 @@ export const Deck = (props) => {
 
     return (
         <div>
+            <h4>{props.isCurrentUser? " Choose a Card and Attack !":""}</h4>
+            <br></br>
             <div className='ui three column grid'>
                 {display_list}
             </div>

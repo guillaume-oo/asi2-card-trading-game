@@ -1,6 +1,7 @@
 @import url("Card/Card.css");
 @import url("User/User.css");
 @import url("NavBar/NavBar.css");
+@import url("Chat/Chat.css");
 
 
 body {
@@ -57,3 +58,8 @@ code {
 .img-profil{
   width: 100%;
 }
+
+.Board {
+  border: 1px solid grey;
+}
+
